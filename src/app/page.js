@@ -177,43 +177,7 @@ export default function Home() {
     </Box>
   );
 
-  const features = [
-    {
-      icon: (
-        <CameraIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
-      ),
-      title: "AI Seed Quality Detection",
-      description:
-        "Automated seed sorting with AI imaging for unmatched purity",
-      details:
-        "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
-    },
-    {
-      icon: (
-        <DropletsIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
-      ),
-      title: "Portable Moisture Detection",
-      description: "Instant moisture monitoring via your mobile device",
-      details:
-        "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
-    },
-    {
-      icon: (
-        <TestTubeIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
-      ),
-      title: "Smart Soil pH Monitoring",
-      description: "Real-time soil pH analysis with AI-driven insights",
-      details:
-        "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
-    },
-    {
-      icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
-      title: "Pest & Disease Detection",
-      description: "Early pest and disease detection with mobile imaging",
-      details:
-        "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
-    },
-  ];
+  
 
   const benefits = [
     {
@@ -243,6 +207,48 @@ export default function Home() {
       ),
       title: "Expert Backed",
       description: "Developed with Central Province agricultural experts",
+    },
+  ];
+
+  const features = [
+    {
+      icon: (
+        <CameraIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+      ),
+      title: "AI Seed Quality Detection",
+      description:
+        "Automated seed sorting with AI imaging for unmatched purity",
+      details:
+        "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
+      url: "/seed-detection",
+    },
+    {
+      icon: (
+        <DropletsIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+      ),
+      title: "Portable Moisture Detection",
+      description: "Instant moisture monitoring via your mobile device",
+      details:
+        "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
+      url: "/moisture-detection",
+    },
+    {
+      icon: (
+        <TestTubeIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+      ),
+      title: "Smart Soil pH Monitoring",
+      description: "Real-time soil pH analysis with AI-driven insights",
+      details:
+        "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
+      url: "/soil-ph-monitoring",
+    },
+    {
+      icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
+      title: "Pest & Disease Detection",
+      description: "Early pest and disease detection with mobile imaging",
+      details:
+        "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
+      url: "/pest-detection",
     },
   ];
 
@@ -905,27 +911,31 @@ export default function Home() {
                           justifyContent: "center",
                         }}
                       >
-                        <Card
-                          component={motion.div}
-                          whileHover={{
-                            scale: 1.02,
-                            boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-                          }}
-                          sx={{
-                            width: "100%",
-                            maxWidth: 400,
-                            p: { xs: 1.5, lg: 2 },
-                            cursor: "pointer",
-                            border: "1px solid #E5E7EB",
-                            bgcolor: "rgba(255, 255, 255, 0.95)",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                            borderRadius: 2,
-                            backdropFilter: "blur(5px)",
-                            transition: "all 0.3s ease",
-                            height: "100%",
-                            overflow: "hidden",
-                          }}
+                        <Link
+                          href={feature.url}
+                          style={{ textDecoration: "none", width: "100%" }}
                         >
+                          <Card
+                            component={motion.div}
+                            whileHover={{
+                              scale: 1.02,
+                              boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
+                            }}
+                            sx={{
+                              width: "100%",
+                              maxWidth: 400,
+                              p: { xs: 1.5, lg: 2 },
+                              cursor: "pointer",
+                              border: "1px solid #E5E7EB",
+                              bgcolor: "rgba(255, 255, 255, 0.95)",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                              borderRadius: 2,
+                              backdropFilter: "blur(5px)",
+                              transition: "all 0.3s ease",
+                              height: "100%",
+                              overflow: "hidden",
+                            }}
+                          >
                           <CardContent
                             sx={{
                               display: "flex",
@@ -972,6 +982,7 @@ export default function Home() {
                             </Box>
                           </CardContent>
                         </Card>
+                        </Link>
                       </Grid>
                     ))}
                   </Grid>
