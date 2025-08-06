@@ -187,7 +187,7 @@ export default function Home() {
         "Automated seed sorting with AI imaging for unmatched purity",
       details:
         "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
-      href: "/seed-detection",
+      path: "/seed_detection",
     },
     {
       icon: (
@@ -197,7 +197,7 @@ export default function Home() {
       description: "Instant moisture monitoring via your mobile device",
       details:
         "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
-      href: "/moisture-detection",
+      path: "/moisture_detection",
     },
     {
       icon: (
@@ -207,7 +207,7 @@ export default function Home() {
       description: "Real-time soil pH analysis with AI-driven insights",
       details:
         "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
-      href: "/soil-ph-monitoring",
+      path: "/ph_detection",
     },
     {
       icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
@@ -215,7 +215,7 @@ export default function Home() {
       description: "Early pest and disease detection with mobile imaging",
       details:
         "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
-      href: "/pest-detection",
+      path: "/pest_detection",
     },
   ];
 
@@ -909,7 +909,7 @@ export default function Home() {
                           justifyContent: "center",
                         }}
                       >
-                        <Link href={feature.href} style={{ textDecoration: 'none' }}>
+                        <Link href={feature.path} passHref style={{ textDecoration: 'none', width: '100%' }}>
                           <Card
                             component={motion.div}
                             whileHover={{
@@ -931,53 +931,53 @@ export default function Home() {
                               overflow: "hidden",
                             }}
                           >
-                          <CardContent
-                            sx={{
-                              display: "flex",
-                              alignItems: "flex-start",
-                              gap: { xs: 1.5, lg: 2 },
-                              p: { xs: 1.5, lg: 2 },
-                            }}
-                          >
-                            <Box
+                            <CardContent
                               sx={{
-                                p: 1,
-                                borderRadius: 2,
-                                bgcolor: "#F7E7CE",
-                                color: "#2F855A",
+                                display: "flex",
+                                alignItems: "flex-start",
+                                gap: { xs: 1.5, lg: 2 },
+                                p: { xs: 1.5, lg: 2 },
                               }}
                             >
-                              {feature.icon}
-                            </Box>
-                            <Box>
-                              <Typography
-                                variant="h6"
+                              <Box
                                 sx={{
-                                  fontWeight: 600,
-                                  color: "#1F2A44",
-                                  fontSize: { xs: "1rem", lg: "1.15rem" },
-                                  lineHeight: 1.2,
+                                  p: 1,
+                                  borderRadius: 2,
+                                  bgcolor: "#F7E7CE",
+                                  color: "#2F855A",
                                 }}
                               >
-                                {feature.title}
-                              </Typography>
-                              <Typography
-                                sx={{
-                                  color: "#4B5563",
-                                  fontSize: { xs: "0.9rem", lg: "0.95rem" },
-                                  display: "-webkit-box",
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: "vertical",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                {feature.description}
-                              </Typography>
-                            </Box>
-                          </CardContent>
-                        </Card>
-                          </Link>
+                                {feature.icon}
+                              </Box>
+                              <Box>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    fontWeight: 600,
+                                    color: "#1F2A44",
+                                    fontSize: { xs: "1rem", lg: "1.15rem" },
+                                    lineHeight: 1.2,
+                                  }}
+                                >
+                                  {feature.title}
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    color: "#4B5563",
+                                    fontSize: { xs: "0.9rem", lg: "0.95rem" },
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {feature.description}
+                                </Typography>
+                              </Box>
+                            </CardContent>
+                          </Card>
+                        </Link>
                       </Grid>
                     ))}
                   </Grid>
