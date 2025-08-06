@@ -187,6 +187,7 @@ export default function Home() {
         "Automated seed sorting with AI imaging for unmatched purity",
       details:
         "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
+      href: "/seed-detection",
     },
     {
       icon: (
@@ -196,6 +197,7 @@ export default function Home() {
       description: "Instant moisture monitoring via your mobile device",
       details:
         "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
+      href: "/moisture-detection",
     },
     {
       icon: (
@@ -205,6 +207,7 @@ export default function Home() {
       description: "Real-time soil pH analysis with AI-driven insights",
       details:
         "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
+      href: "/soil-ph-monitoring",
     },
     {
       icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
@@ -212,6 +215,7 @@ export default function Home() {
       description: "Early pest and disease detection with mobile imaging",
       details:
         "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
+      href: "/pest-detection",
     },
   ];
 
@@ -905,27 +909,28 @@ export default function Home() {
                           justifyContent: "center",
                         }}
                       >
-                        <Card
-                          component={motion.div}
-                          whileHover={{
-                            scale: 1.02,
-                            boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-                          }}
-                          sx={{
-                            width: "100%",
-                            maxWidth: 400,
-                            p: { xs: 1.5, lg: 2 },
-                            cursor: "pointer",
-                            border: "1px solid #E5E7EB",
-                            bgcolor: "rgba(255, 255, 255, 0.95)",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                            borderRadius: 2,
-                            backdropFilter: "blur(5px)",
-                            transition: "all 0.3s ease",
-                            height: "100%",
-                            overflow: "hidden",
-                          }}
-                        >
+                        <Link href={feature.href} style={{ textDecoration: 'none' }}>
+                          <Card
+                            component={motion.div}
+                            whileHover={{
+                              scale: 1.02,
+                              boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
+                            }}
+                            sx={{
+                              width: "100%",
+                              maxWidth: 400,
+                              p: { xs: 1.5, lg: 2 },
+                              cursor: "pointer",
+                              border: "1px solid #E5E7EB",
+                              bgcolor: "rgba(255, 255, 255, 0.95)",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                              borderRadius: 2,
+                              backdropFilter: "blur(5px)",
+                              transition: "all 0.3s ease",
+                              height: "100%",
+                              overflow: "hidden",
+                            }}
+                          >
                           <CardContent
                             sx={{
                               display: "flex",
@@ -972,6 +977,7 @@ export default function Home() {
                             </Box>
                           </CardContent>
                         </Card>
+                          </Link>
                       </Grid>
                     ))}
                   </Grid>
