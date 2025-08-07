@@ -36,6 +36,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Particles from 'react-particles';
 import { loadFull } from 'tsparticles';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
@@ -1084,6 +1085,7 @@ const SeedDetection = () => {
             </motion.div>
           </Container>
         </Box>
+        <ScrollToTopButton />
       </Box>
     </>
   );

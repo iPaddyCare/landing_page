@@ -45,6 +45,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
@@ -267,6 +268,7 @@ export default function Home() {
           minHeight: "100vh",
           bgcolor: "#F9FAFB",
           fontFamily: "Poppins, sans-serif",
+          position: "relative",
         }}
       >
         {/* Navigation */}
@@ -394,6 +396,7 @@ export default function Home() {
             {drawer}
           </Drawer>
         </AppBar>
+
         {/* Hero Section */}
         <Box
           id="hero"
@@ -659,8 +662,8 @@ export default function Home() {
                           "& .MuiLinearProgress-bar": {
                             bgcolor: "#2F855A",
                             transition: "width 0.5s ease-in-out",
-                          },
-                        }}
+                          }}
+                        }
                       />
                       <Stack
                         direction="row"
@@ -696,6 +699,7 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
         {/* Benefits Section */}
         <Box
           id="benefits"
@@ -842,6 +846,7 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
         {/* Features Section */}
         <Box
           id="features"
@@ -986,7 +991,8 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
-        /* Mobile App Section */
+
+        {/* Mobile App Section */}
         <Box id="app" component="section" sx={{ py: 12, bgcolor: "#F9FAFB" }}>
           <Container maxWidth="xl">
             <motion.div
@@ -1271,6 +1277,7 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
         {/* Marketplace Section */}
         <Box
           id="marketplace"
@@ -1430,6 +1437,7 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
         {/* CTA Section */}
         <Box
           component="section"
@@ -1540,6 +1548,7 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
         {/* Footer */}
         <Box
           component="footer"
@@ -1730,6 +1739,9 @@ export default function Home() {
             </motion.div>
           </Container>
         </Box>
+
+        {/* Scroll to Top Button */}
+        <ScrollToTopButton />
       </Box>
     </>
   );
