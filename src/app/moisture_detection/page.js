@@ -740,7 +740,7 @@ const SeedMoisture = () => {
                   },
                   {
                     step: '3',
-                    title: 'Get Instructions',
+                    title: 'Get Instructions & Predictions ',
                     description: 'App provides guidance based on lab data if levels are incorrect',
                     icon: <Assessment sx={{ fontSize: 40, color: '#2F855A' }} />,
                     image: (
