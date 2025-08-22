@@ -38,7 +38,7 @@ import Particles from "react-particles";
 import { loadFull } from "tsparticles";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Footer from "@/components/Footer";
-import useLanguage from "@/hooks/useLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
