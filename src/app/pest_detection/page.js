@@ -38,10 +38,18 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const PestDetectionPage = () => {
+  const { t } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navItems = ["Features", "Benefits", "Mobile App", "Contact"];
+
+  const navItems = [
+    { key: "features", label: t("navigation.features") },
+    { key: "benefits", label: t("navigation.benefits") },
+    { key: "mobile_app", label: t("navigation.mobile_app") },
+    { key: "contact", label: t("navigation.contact") },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -102,7 +110,7 @@ const PestDetectionPage = () => {
             style={{ height: "auto", maxWidth: "100%" }}
           />
           <Typography variant="h6" sx={{ fontWeight: 700, color: "#1F2A44" }}>
-            iPaddyCare
+            {t("common.company_name")}
           </Typography>
         </Box>
         <List>
@@ -111,9 +119,9 @@ const PestDetectionPage = () => {
               <ListItemButton
                 component={Link}
                 href={`#${
-                  item === "Mobile App"
+                  item.key === "mobile_app"
                     ? "app"
-                    : item.toLowerCase().replace(" ", "")
+                    : item.key.toLowerCase().replace("_", "")
                 }`}
                 scroll={true}
                 sx={{
@@ -122,7 +130,7 @@ const PestDetectionPage = () => {
                 }}
               >
                 <ListItemText
-                  primary={item}
+                  primary={item.label}
                   primaryTypographyProps={{
                     sx: {
                       color: "#1F2A44",
@@ -157,7 +165,7 @@ const PestDetectionPage = () => {
           mb: 2,
         }}
       >
-        Get Started
+        {t("navigation.get_started")}
       </Button>
     </Box>
   );
@@ -165,36 +173,35 @@ const PestDetectionPage = () => {
   const steps = [
     {
       step: "1",
-      title:
-        "Take Photo of a Spot You Suspect Has Been Damaged by Pests or Disease",
-      description:
-        "Capture a clear photo of the affected plant area using the mobile app",
+      title: t("pest_detection.step_1_title"),
+      description: t("pest_detection.step_1_description"),
       icon: PhotoCamera,
       color: "#2F855A",
+      placeholder: t("pest_detection.step_1_placeholder"),
     },
     {
       step: "2",
-      title: "AI Analyzes Photo and Identifies Pest or Disease",
-      description:
-        "Our AI automatically analyzes the photo and identifies the specific pest or disease",
+      title: t("pest_detection.step_2_title"),
+      description: t("pest_detection.step_2_description"),
       icon: TrendingUp,
       color: "#2563EB",
+      placeholder: t("pest_detection.step_2_placeholder"),
     },
     {
       step: "3",
-      title: "Receive Treatment Plan and Recommendations",
-      description:
-        "Get detailed information and a personalized treatment plan based on the AI analysis",
+      title: t("pest_detection.step_3_title"),
+      description: t("pest_detection.step_3_description"),
       icon: Assessment,
       color: "#7C3AED",
+      placeholder: t("pest_detection.step_3_placeholder"),
     },
   ];
 
   const features = [
-    "Mobile photo capture",
-    "AI pest identification",
-    "Treatment suggestions",
-    "Supplier locations",
+    t("pest_detection.mobile_photo_capture"),
+    t("pest_detection.ai_pest_identification"),
+    t("pest_detection.treatment_suggestions"),
+    t("pest_detection.supplier_locations"),
   ];
 
   return (
@@ -238,7 +245,7 @@ const PestDetectionPage = () => {
               variant="h6"
               sx={{ fontWeight: 700, color: "#1F2A44", fontSize: "1.5rem" }}
             >
-              iPaddyCare
+              {t("common.company_name")}
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
@@ -254,9 +261,9 @@ const PestDetectionPage = () => {
                 <Link
                   key={index}
                   href={`#${
-                    item === "Mobile App"
+                    item.key === "mobile_app"
                       ? "app"
-                      : item.toLowerCase().replace(" ", "")
+                      : item.key.toLowerCase().replace("_", "")
                   }`}
                   scroll={true}
                 >
@@ -270,7 +277,7 @@ const PestDetectionPage = () => {
                       transition: "color 0.3s ease",
                     }}
                   >
-                    {item}
+                    {item.label}
                   </Typography>
                 </Link>
               ))}
@@ -295,7 +302,7 @@ const PestDetectionPage = () => {
                     fontSize: "1rem",
                   }}
                 >
-                  Back to Home
+                  {t("pest_detection.back_to_home")}
                 </Button>
               </Link>
               <Button
@@ -317,7 +324,7 @@ const PestDetectionPage = () => {
                   fontSize: "1rem",
                 }}
               >
-                Get Started
+                {t("navigation.get_started")}
               </Button>
             </Box>
           </Box>
@@ -408,7 +415,7 @@ const PestDetectionPage = () => {
                     }}
                   >
                     <AwardIcon sx={{ fontSize: 16, mr: 1 }} />
-                    AI-Powered
+                    {t("pest_detection.ai_powered")}
                   </Badge>
                   <Badge
                     component={motion.div}
@@ -425,7 +432,7 @@ const PestDetectionPage = () => {
                     }}
                   >
                     <GlobeIcon sx={{ fontSize: 16, mr: 1 }} />
-                    Instant Detection
+                    {t("pest_detection.instant_detection")}
                   </Badge>
                 </Stack>
                 <Typography
@@ -441,7 +448,7 @@ const PestDetectionPage = () => {
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  AI-Driven Pest Detection
+                  {t("pest_detection.title")}
                 </Typography>
                 <Typography
                   variant="h6"
@@ -453,7 +460,7 @@ const PestDetectionPage = () => {
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  Early Detection with Smart Technology
+                  {t("pest_detection.subtitle")}
                 </Typography>
                 <Typography
                   sx={{
@@ -465,9 +472,7 @@ const PestDetectionPage = () => {
                     mx: { xs: "auto", md: 0 },
                   }}
                 >
-                  Capture plant photos for instant AI identification of pests or
-                  diseases, with treatment suggestions and supplier locations
-                  for comprehensive crop protection.
+                  {t("pest_detection.description")}
                 </Typography>
                 {/* System Highlights Integrated */}
                 <Stack
@@ -478,12 +483,7 @@ const PestDetectionPage = () => {
                     justifyContent: { xs: "center", md: "flex-start" },
                   }}
                 >
-                  {[
-                    "Mobile photo capture",
-                    "AI pest identification",
-                    "Treatment suggestions",
-                    "Supplier locations",
-                  ].map((feature, index) => (
+                  {features.map((feature, index) => (
                     <Box
                       key={index}
                       component={motion.div}
@@ -547,7 +547,7 @@ const PestDetectionPage = () => {
                     alignSelf: { xs: "center", md: "flex-start" },
                   }}
                 >
-                  Start Detection Now
+                  {t("pest_detection.start_detection")}
                 </Button>
               </Stack>
             </motion.div>
@@ -584,7 +584,7 @@ const PestDetectionPage = () => {
                     mb: 2,
                   }}
                 >
-                  Watch Our AI Detection in Action
+                  {t("pest_detection.demo_title")}
                 </Typography>
                 <Typography
                   sx={{
@@ -595,8 +595,7 @@ const PestDetectionPage = () => {
                     lineHeight: 1.6,
                   }}
                 >
-                  See how our AI-powered system analyzes plant photos and
-                  identifies pests or diseases with precision.
+                  {t("pest_detection.demo_description")}
                 </Typography>
               </Box>
               <Box
@@ -674,7 +673,7 @@ const PestDetectionPage = () => {
                           fontWeight: 500,
                         }}
                       >
-                        Demo Video Placeholder (Add Your Video Here)
+                        {t("pest_detection.video_placeholder")}
                       </Typography>
                     </Box>
                   </Box>
@@ -689,7 +688,7 @@ const PestDetectionPage = () => {
                       fontSize: "1.1rem",
                     }}
                   >
-                    AI Pest Detection Demo
+                    {t("pest_detection.video_title")}
                   </Typography>
                   <Typography
                     sx={{
@@ -699,8 +698,7 @@ const PestDetectionPage = () => {
                       mx: "auto",
                     }}
                   >
-                    Watch our system detect pests and diseases with precision
-                    using AI technology.
+                    {t("pest_detection.video_description")}
                   </Typography>
                 </Box>
               </Box>
@@ -738,7 +736,7 @@ const PestDetectionPage = () => {
                     mb: 2,
                   }}
                 >
-                  How Our System Works
+                  {t("pest_detection.steps_title")}
                 </Typography>
                 <Typography
                   sx={{
@@ -749,8 +747,7 @@ const PestDetectionPage = () => {
                     lineHeight: 1.6,
                   }}
                 >
-                  A seamless process to detect pests and diseases with AI
-                  technology
+                  {t("pest_detection.steps_description")}
                 </Typography>
               </Box>
               <Box
@@ -764,110 +761,7 @@ const PestDetectionPage = () => {
                   "&::-webkit-scrollbar": { display: "none" },
                 }}
               >
-                {[
-                  {
-                    step: "1",
-                    title: "Capture Plant Photo",
-                    description:
-                      "Take a clear photo of the affected plant area using the mobile app",
-                    icon: (
-                      <PhotoCamera sx={{ fontSize: 40, color: "#2F855A" }} />
-                    ),
-                    image: (
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: 180,
-                          bgcolor: "#F3F4F6",
-                          borderRadius: 3,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "2px dashed #D1D5DB",
-                        }}
-                      >
-                        <Box sx={{ textAlign: "center" }}>
-                          <PhotoCamera
-                            sx={{ fontSize: 40, color: "#9CA3AF", mb: 1 }}
-                          />
-                          <Typography
-                            sx={{ color: "#9CA3AF", fontSize: "0.85rem" }}
-                          >
-                            Plant Photo
-                          </Typography>
-                        </Box>
-                      </Box>
-                    ),
-                  },
-                  {
-                    step: "2",
-                    title: "AI Analysis",
-                    description:
-                      "Our AI processes the image to detect pests or diseases with precision",
-                    icon: (
-                      <TrendingUp sx={{ fontSize: 40, color: "#2F855A" }} />
-                    ),
-                    image: (
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: 180,
-                          bgcolor: "#F3F4F6",
-                          borderRadius: 3,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "2px dashed #D1D5DB",
-                        }}
-                      >
-                        <Box sx={{ textAlign: "center" }}>
-                          <TrendingUp
-                            sx={{ fontSize: 40, color: "#9CA3AF", mb: 1 }}
-                          />
-                          <Typography
-                            sx={{ color: "#9CA3AF", fontSize: "0.85rem" }}
-                          >
-                            AI Analysis Interface
-                          </Typography>
-                        </Box>
-                      </Box>
-                    ),
-                  },
-                  {
-                    step: "3",
-                    title: "Treatment Recommendations",
-                    description:
-                      "Get detailed treatment plans and supplier locations based on AI results",
-                    icon: (
-                      <Assessment sx={{ fontSize: 40, color: "#2F855A" }} />
-                    ),
-                    image: (
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: 180,
-                          bgcolor: "#F3F4F6",
-                          borderRadius: 3,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "2px dashed #D1D5DB",
-                        }}
-                      >
-                        <Box sx={{ textAlign: "center" }}>
-                          <Assessment
-                            sx={{ fontSize: 40, color: "#9CA3AF", mb: 1 }}
-                          />
-                          <Typography
-                            sx={{ color: "#9CA3AF", fontSize: "0.85rem" }}
-                          >
-                            Treatment Plan
-                          </Typography>
-                        </Box>
-                      </Box>
-                    ),
-                  },
-                ].map((step, index) => (
+                {steps.map((step, index) => (
                   <Box
                     key={index}
                     component={motion.div}
@@ -911,7 +805,7 @@ const PestDetectionPage = () => {
                       >
                         {step.step}
                       </Box>
-                      {step.icon}
+                      <step.icon sx={{ fontSize: 40, color: "#2F855A" }} />
                     </Box>
                     <Typography
                       variant="h6"
@@ -934,7 +828,30 @@ const PestDetectionPage = () => {
                     >
                       {step.description}
                     </Typography>
-                    {step.image}
+                    {/* Image placeholder */}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: 180,
+                        bgcolor: "#F3F4F6",
+                        borderRadius: 3,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: "2px dashed #D1D5DB",
+                      }}
+                    >
+                      <Box sx={{ textAlign: "center" }}>
+                        <step.icon
+                          sx={{ fontSize: 40, color: "#9CA3AF", mb: 1 }}
+                        />
+                        <Typography
+                          sx={{ color: "#9CA3AF", fontSize: "0.85rem" }}
+                        >
+                          {step.placeholder}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Box>
                 ))}
               </Box>
@@ -989,7 +906,7 @@ const PestDetectionPage = () => {
                   mb: 2,
                 }}
               >
-                Transform Your Pest Detection
+                {t("pest_detection.cta_title")}
               </Typography>
               <Typography
                 sx={{
@@ -1001,8 +918,7 @@ const PestDetectionPage = () => {
                   lineHeight: 1.6,
                 }}
               >
-                Leverage our AI-driven system to detect pests and diseases with
-                unmatched accuracy and efficiency.
+                {t("pest_detection.cta_description")}
               </Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -1029,7 +945,7 @@ const PestDetectionPage = () => {
                     fontSize: "1rem",
                   }}
                 >
-                  Start Free Trial
+                  {t("pest_detection.start_free_trial")}
                 </Button>
                 <Button
                   component={motion.button}
@@ -1052,7 +968,7 @@ const PestDetectionPage = () => {
                     fontSize: "1rem",
                   }}
                 >
-                  Schedule Demo
+                  {t("pest_detection.schedule_demo")}
                 </Button>
               </Stack>
             </motion.div>
