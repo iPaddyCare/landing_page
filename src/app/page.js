@@ -21,6 +21,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   Agriculture as LeafIcon,
@@ -41,6 +43,7 @@ import {
   PlayCircleOutline as PlayCircleIcon,
   Star as StarIcon,
   Menu as MenuIcon,
+  KeyboardArrowDown as ArrowDownIcon,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -51,7 +54,12 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 
+// Import your custom language hook
+import { useLanguage } from '../hooks/useLanguage';
+
 export default function Home() {
+  const { t, language, changeLanguage } = useLanguage(); // Use your custom hook instead of next-i18next
+  
   const [activeFeature, setActiveFeature] = useState(0);
   const [visibleSections, setVisibleSections] = useState({
     hero: false,
@@ -62,6 +70,7 @@ export default function Home() {
     contact: false,
   });
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -92,7 +101,25 @@ export default function Home() {
     setMobileOpen(!mobileOpen);
   };
 
-  const navItems = ["Features", "Benefits", "Mobile App", "Contact"];
+  const handleLanguageMenuOpen = (event) => {
+    setLanguageMenuAnchor(event.currentTarget);
+  };
+
+  const handleLanguageMenuClose = () => {
+    setLanguageMenuAnchor(null);
+  };
+
+  const handleLanguageChange = (newLanguage) => {
+    changeLanguage(newLanguage);
+    handleLanguageMenuClose();
+  };
+
+  const navItems = [
+    t('navigation.features'),
+    t('navigation.benefits'), 
+    t('navigation.mobile_app'),
+    t('navigation.contact')
+  ];
 
   const drawer = (
     <Box
@@ -113,13 +140,13 @@ export default function Home() {
         >
           <Image
             src="/images/logo.png"
-            alt="iPaddyCare Logo"
+            alt={`${t('common.company_name')} Logo`}
             width={24}
             height={24}
             style={{ height: "auto", maxWidth: "100%" }}
           />
           <Typography variant="h6" sx={{ fontWeight: 700, color: "#1F2A44" }}>
-            iPaddyCare
+            {t('common.company_name')}
           </Typography>
         </Box>
         <List>
@@ -128,7 +155,7 @@ export default function Home() {
               <ListItemButton
                 component={Link}
                 href={`#${
-                  item === "Mobile App"
+                  item === t('navigation.mobile_app')
                     ? "app"
                     : item.toLowerCase().replace(" ", "")
                 }`}
@@ -152,6 +179,35 @@ export default function Home() {
             </ListItem>
           ))}
         </List>
+        
+        {/* Language Switcher for Mobile */}
+        <Box sx={{ mb: 2, px: 2 }}>
+          <Button
+            component={motion.button}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            variant="outlined"
+            startIcon={<GlobeIcon />}
+            endIcon={<ArrowDownIcon />}
+            fullWidth
+            onClick={handleLanguageMenuOpen}
+            sx={{
+              borderColor: "#2F855A",
+              color: "#2F855A",
+              "&:hover": {
+                bgcolor: "#2F855A11",
+                borderColor: "#2F855A",
+              },
+              py: 1.5,
+              borderRadius: 4,
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+            }}
+          >
+            {language === 'en' ? 'English' : language === 'si' ? 'සිංහල' : 'தமிழ்'}
+          </Button>
+        </Box>
       </Box>
       <Button
         component={motion.button}
@@ -174,7 +230,7 @@ export default function Home() {
           mb: 2,
         }}
       >
-        Get Started
+        {t('navigation.get_started')}
       </Button>
     </Box>
   );
@@ -184,39 +240,34 @@ export default function Home() {
       icon: (
         <CameraIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "AI Seed Quality Detection",
-      description:
-        "Automated seed sorting with AI imaging for unmatched purity",
-      details:
-        "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
+      title: t('features.ai_seed_quality'),
+      description: t('features.ai_seed_quality_desc'),
+      details: t('features.ai_seed_quality_details'),
       path: "/seed_detection",
     },
     {
       icon: (
         <DropletsIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "Portable Moisture Detection",
-      description: "Instant moisture monitoring via your mobile device",
-      details:
-        "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
+      title: t('features.moisture_detection'),
+      description: t('features.moisture_detection_desc'),
+      details: t('features.moisture_detection_details'),
       path: "/moisture_detection",
     },
     {
       icon: (
         <TestTubeIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "Smart Soil pH Monitoring",
-      description: "Real-time soil pH analysis with AI-driven insights",
-      details:
-        "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
+      title: t('features.soil_ph'),
+      description: t('features.soil_ph_desc'),
+      details: t('features.soil_ph_details'),
       path: "/ph_detection",
     },
     {
       icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
-      title: "Pest & Disease Detection",
-      description: "Early pest and disease detection with mobile imaging",
-      details:
-        "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
+      title: t('features.pest_disease'),
+      description: t('features.pest_disease_desc'),
+      details: t('features.pest_disease_details'),
       path: "/pest_detection",
     },
   ];
@@ -228,37 +279,55 @@ export default function Home() {
           sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }}
         />
       ),
-      title: "Boost Yields",
-      description: "Increase crop yields by up to 30% with proactive solutions",
+      title: t('benefits.boost_yields'),
+      description: t('benefits.boost_yields_desc'),
     },
     {
       icon: <ZapIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />,
-      title: "Save Time",
-      description: "Cut testing time by 80% with automated tools",
+      title: t('benefits.save_time'),
+      description: t('benefits.save_time_desc'),
     },
     {
       icon: (
         <TargetIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
       ),
-      title: "High Precision",
-      description: "99.5% accuracy in seed and pest analysis",
+      title: t('benefits.high_precision'),
+      description: t('benefits.high_precision_desc'),
     },
     {
       icon: (
         <AwardIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
       ),
-      title: "Expert Backed",
-      description: "Developed with Central Province agricultural experts",
+      title: t('benefits.expert_backed'),
+      description: t('benefits.expert_backed_desc'),
     },
   ];
 
   const appFeatures = [
-    "Multilingual (Sinhala, Tamil, English)",
-    "Connect with agriculture officers",
-    "AI-driven seed recommendations",
-    "Harvest and income forecasts",
-    "Integrated marketplace",
-    "Full test history",
+    t('mobile_app.multilingual'),
+    t('mobile_app.connect_officers'),
+    t('mobile_app.ai_recommendations'),
+    t('mobile_app.harvest_forecasts'),
+    t('mobile_app.integrated_marketplace'),
+    t('mobile_app.test_history'),
+  ];
+
+  const marketplaceItems = [
+    {
+      icon: <LeafIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      title: t('marketplace.seeds_fertilizers'),
+      description: t('marketplace.seeds_fertilizers_desc'),
+    },
+    {
+      icon: <ZapIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      title: t('marketplace.tools_equipment'),
+      description: t('marketplace.tools_equipment_desc'),
+    },
+    {
+      icon: <UsersIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      title: t('marketplace.expert_services'),
+      description: t('marketplace.expert_services_desc'),
+    },
   ];
 
   return (
@@ -296,7 +365,7 @@ export default function Home() {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Image
                 src="/images/logo.png"
-                alt="iPaddyCare Logo"
+                alt={`${t('common.company_name')} Logo`}
                 width={24}
                 height={24}
                 style={{ height: "auto" }}
@@ -305,7 +374,7 @@ export default function Home() {
                 variant="h6"
                 sx={{ fontWeight: 700, color: "#1F2A44" }}
               >
-                iPaddyCare
+                {t('common.company_name')}
               </Typography>
             </Box>
             <Box sx={{ flexGrow: 1 }} />
@@ -321,7 +390,7 @@ export default function Home() {
                   <Link
                     key={index}
                     href={`#${
-                      item === "Mobile App"
+                      item === t('navigation.mobile_app')
                         ? "app"
                         : item.toLowerCase().replace(" ", "")
                     }`}
@@ -342,6 +411,83 @@ export default function Home() {
                   </Link>
                 ))}
               </Box>
+              
+              {/* Language Switcher */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Button
+                  component={motion.button}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  variant="outlined"
+                  startIcon={<GlobeIcon />}
+                  endIcon={<ArrowDownIcon />}
+                  onClick={handleLanguageMenuOpen}
+                  sx={{
+                    borderColor: "#2F855A",
+                    color: "#2F855A",
+                    "&:hover": {
+                      bgcolor: "#2F855A11",
+                      borderColor: "#2F855A",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    },
+                    px: 2,
+                    py: 1,
+                    borderRadius: 4,
+                    fontWeight: 600,
+                    fontSize: "0.85rem",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {language.toUpperCase()}
+                </Button>
+                <Menu
+                  anchorEl={languageMenuAnchor}
+                  open={Boolean(languageMenuAnchor)}
+                  onClose={handleLanguageMenuClose}
+                  PaperProps={{
+                    sx: {
+                      mt: 1,
+                      minWidth: 120,
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+                      borderRadius: 2,
+                      border: "1px solid rgba(255, 255, 255, 0.2)",
+                      backdropFilter: "blur(10px)",
+                    },
+                  }}
+                >
+                  <MenuItem 
+                    onClick={() => handleLanguageChange('en')}
+                    sx={{
+                      color: language === 'en' ? "#2F855A" : "#4B5563",
+                      fontWeight: language === 'en' ? 600 : 400,
+                      "&:hover": { bgcolor: "#2F855A11" },
+                    }}
+                  >
+                    English
+                  </MenuItem>
+                  <MenuItem 
+                    onClick={() => handleLanguageChange('si')}
+                    sx={{
+                      color: language === 'si' ? "#2F855A" : "#4B5563",
+                      fontWeight: language === 'si' ? 600 : 400,
+                      "&:hover": { bgcolor: "#2F855A11" },
+                    }}
+                  >
+                    සිංහල
+                  </MenuItem>
+                  <MenuItem 
+                    onClick={() => handleLanguageChange('ta')}
+                    sx={{
+                      color: language === 'ta' ? "#2F855A" : "#4B5563",
+                      fontWeight: language === 'ta' ? 600 : 400,
+                      "&:hover": { bgcolor: "#2F855A11" },
+                    }}
+                  >
+                    தமிழ்
+                  </MenuItem>
+                </Menu>
+              </Box>
+              
               <Button
                 component={motion.button}
                 whileHover={{ scale: 1.05 }}
@@ -364,7 +510,7 @@ export default function Home() {
                   /* Add navigation logic for Get Started */
                 }}
               >
-                Get Started
+                {t('navigation.get_started')}
               </Button>
             </Box>
             <IconButton
@@ -457,7 +603,7 @@ export default function Home() {
                       }}
                     >
                       <AwardIcon sx={{ fontSize: 16, mr: 1 }} />
-                      Expert Approved
+                      {t('hero.badge_expert_approved')}
                     </Badge>
                     <Badge
                       component={motion.div}
@@ -474,7 +620,7 @@ export default function Home() {
                       }}
                     >
                       <GlobeIcon sx={{ fontSize: 16, mr: 1 }} />
-                      Multilingual
+                      {t('hero.badge_multilingual')}
                     </Badge>
                   </Stack>
                   <Typography
@@ -490,12 +636,12 @@ export default function Home() {
                       mb: 2,
                     }}
                   >
-                    Transform Your
+                    {t('hero.title_transform')}
                     <Box
                       component="span"
                       sx={{ color: "#2F855A", display: "block" }}
                     >
-                      Paddy Farming
+                      {t('hero.title_paddy_farming')}
                     </Box>
                   </Typography>
                   <Typography
@@ -509,9 +655,7 @@ export default function Home() {
                       lineHeight: 1.6,
                     }}
                   >
-                    AI-powered tools for seed sorting, moisture detection, soil
-                    analysis, and pest management, tailored for Sri Lankan
-                    farmers.
+                    {t('hero.description')}
                   </Typography>
                   <Stack
                     direction={{ xs: "column", sm: "row" }}
@@ -539,7 +683,7 @@ export default function Home() {
                         fontSize: { xs: "0.85rem", lg: "1rem" },
                       }}
                     >
-                      Watch Demo
+                      {t('hero.watch_demo')}
                     </Button>
                     <Button
                       component={motion.button}
@@ -563,7 +707,7 @@ export default function Home() {
                         fontSize: { xs: "0.85rem", lg: "1rem" },
                       }}
                     >
-                      Download App
+                      {t('hero.download_app')}
                     </Button>
                   </Stack>
                   <Stack
@@ -578,8 +722,8 @@ export default function Home() {
                       <StarIcon
                         sx={{ color: "#D4A017", fontSize: { xs: 16, lg: 20 } }}
                       />
-                      <Typography sx={{ fontWeight: 600 }}>4.9/5</Typography>
-                      <Typography>User Rating</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>4.9</Typography>
+                      <Typography>{t('hero.user_rating')}</Typography>
                     </Stack>
                     <Divider
                       orientation="vertical"
@@ -589,8 +733,8 @@ export default function Home() {
                       <UsersIcon
                         sx={{ color: "#2F855A", fontSize: { xs: 16, lg: 20 } }}
                       />
-                      <Typography sx={{ fontWeight: 600 }}>10,000+</Typography>
-                      <Typography>Active Users</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>10K+</Typography>
+                      <Typography>{t('hero.active_users')}</Typography>
                     </Stack>
                   </Stack>
                 </Grid>
@@ -641,7 +785,7 @@ export default function Home() {
                             fontSize: { xs: "0.8rem", lg: "0.9rem" },
                           }}
                         >
-                          AI Analysis Accuracy
+                          {t('hero.ai_analysis_accuracy')}
                         </Typography>
                         <Typography
                           sx={{
@@ -650,7 +794,7 @@ export default function Home() {
                             fontSize: { xs: "0.8rem", lg: "0.9rem" },
                           }}
                         >
-                          99.5% Accurate
+                          99.5% {t('hero.accurate')}
                         </Typography>
                       </Stack>
                       <LinearProgress
@@ -663,8 +807,8 @@ export default function Home() {
                           "& .MuiLinearProgress-bar": {
                             bgcolor: "#2F855A",
                             transition: "width 0.5s ease-in-out",
-                          }}
-                        }
+                          },
+                        }}
                       />
                       <Stack
                         direction="row"
@@ -681,7 +825,7 @@ export default function Home() {
                               color: "#3B82F6",
                             }}
                           />
-                          <Typography>Pest Detection: &lt; 2 min</Typography>
+                          <Typography>{t('hero.pest_detection_time')}</Typography>
                         </Stack>
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <TrendingUpIcon
@@ -690,7 +834,7 @@ export default function Home() {
                               color: "#8B5CF6",
                             }}
                           />
-                          <Typography>Yield Boost: Up to 30%</Typography>
+                          <Typography>{t('hero.yield_boost')}</Typography>
                         </Stack>
                       </Stack>
                     </Stack>
@@ -726,7 +870,7 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Why iPaddyCare?
+                  {t('benefits.title')}
                 </Typography>
                 <Typography
                   sx={{
@@ -737,8 +881,7 @@ export default function Home() {
                     fontSize: { xs: "0.85rem", lg: "1rem" },
                   }}
                 >
-                  Built with expertise from Central Province agricultural
-                  officers and the Department of Agriculture, Gannoruwa.
+                  {t('benefits.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -876,7 +1019,7 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Your All-in-One Farming Toolkit
+                  {t('features.title')}
                 </Typography>
                 <Typography
                   sx={{
@@ -887,8 +1030,7 @@ export default function Home() {
                     fontSize: { xs: "0.9rem", lg: "1rem" },
                   }}
                 >
-                  Comprehensive solutions to tackle every aspect of modern paddy
-                  cultivation.
+                  {t('features.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -1058,7 +1200,7 @@ export default function Home() {
                               fontSize: "1.1rem",
                             }}
                           >
-                            iPaddyCare
+                            {t('common.company_name')}
                           </Typography>
                         </Stack>
                         <Stack direction="row" spacing={1}>
@@ -1116,7 +1258,7 @@ export default function Home() {
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            Seed Analysis
+                            {t('mobile_app.seed_analysis')}
                           </Typography>
                           <CheckCircleIcon
                             sx={{ color: "#3B82F6", fontSize: 16 }}
@@ -1128,7 +1270,7 @@ export default function Home() {
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            Moisture Test
+                            {t('mobile_app.moisture_test')}
                           </Typography>
                           <CheckCircleIcon
                             sx={{ color: "#3B82F6", fontSize: 16 }}
@@ -1140,7 +1282,7 @@ export default function Home() {
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            pH Analysis
+                            {t('mobile_app.ph_analysis')}
                           </Typography>
                           <CheckCircleIcon
                             sx={{ color: "#3B82F6", fontSize: 16 }}
@@ -1174,7 +1316,7 @@ export default function Home() {
                     }}
                   >
                     <SmartphoneIcon sx={{ fontSize: 16, mr: 1 }} />
-                    Mobile App
+                    {t('mobile_app.badge')}
                   </Badge>
                   <Typography
                     variant="h2"
@@ -1188,7 +1330,7 @@ export default function Home() {
                       mb: 2,
                     }}
                   >
-                    Farming at Your Fingertips
+                    {t('mobile_app.title')}
                   </Typography>
                   <Typography
                     sx={{
@@ -1198,8 +1340,7 @@ export default function Home() {
                       lineHeight: 1.6,
                     }}
                   >
-                    Manage your farm with our intuitive mobile app, designed for
-                    farmers and agricultural professionals in Sri Lanka.
+                    {t('mobile_app.description')}
                   </Typography>
                   <Stack spacing={1.5} sx={{ mb: 3 }}>
                     {appFeatures.map((feature, index) => (
@@ -1247,7 +1388,7 @@ export default function Home() {
                         fontSize: "0.9rem",
                       }}
                     >
-                      Download for iOS
+                      {t('mobile_app.download_ios')}
                     </Button>
                     <Button
                       component={motion.button}
@@ -1270,7 +1411,7 @@ export default function Home() {
                         fontSize: "0.9rem",
                       }}
                     >
-                      Get on Android
+                      {t('mobile_app.get_android')}
                     </Button>
                   </Stack>
                 </Grid>
@@ -1318,7 +1459,7 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Explore Our Marketplace
+                  {t('marketplace.title')}
                 </Typography>
                 <Typography
                   sx={{
@@ -1329,8 +1470,7 @@ export default function Home() {
                     fontSize: { xs: "0.9rem", lg: "1rem" },
                   }}
                 >
-                  Find premium seeds, tools, and expert services to elevate your
-                  farming operations.
+                  {t('marketplace.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -1344,26 +1484,7 @@ export default function Home() {
                   "&::-webkit-scrollbar": { display: "none" },
                 }}
               >
-                {[
-                  {
-                    icon: <LeafIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Seeds & Fertilizers",
-                    description:
-                      "High-quality seeds and organic fertilizers from trusted suppliers",
-                  },
-                  {
-                    icon: <ZapIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Tools & Equipment",
-                    description:
-                      "Advanced tools to enhance your farming efficiency",
-                  },
-                  {
-                    icon: <UsersIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Expert Services",
-                    description:
-                      "Access professional agricultural consultation and support",
-                  },
-                ].map((item, index) => (
+                {marketplaceItems.map((item, index) => (
                   <Grid
                     key={index}
                     sx={{
@@ -1480,7 +1601,7 @@ export default function Home() {
                   mb: 2,
                 }}
               >
-                Transform Your Farm Today
+                {t('cta.title')}
               </Typography>
               <Typography
                 sx={{
@@ -1492,8 +1613,7 @@ export default function Home() {
                   fontSize: { xs: "0.9rem", lg: "1rem" },
                 }}
               >
-                Join over 10,000 farmers using iPaddyCare to boost yields and
-                streamline operations.
+                {t('cta.subtitle')}
               </Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -1520,7 +1640,7 @@ export default function Home() {
                     fontSize: "1rem",
                   }}
                 >
-                  Start Free Trial
+                  {t('cta.start_free_trial')}
                 </Button>
                 <Button
                   component={motion.button}
@@ -1543,7 +1663,7 @@ export default function Home() {
                     fontSize: "1rem",
                   }}
                 >
-                  Schedule Demo
+                  {t('cta.schedule_demo')}
                 </Button>
               </Stack>
             </motion.div>
@@ -1554,7 +1674,6 @@ export default function Home() {
         <Footer />
 
         {/* Scroll to Top Button */}
-        
         <ScrollToTopButton />
       </Box>
     </>

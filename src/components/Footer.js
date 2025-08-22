@@ -16,7 +16,12 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+// Import the useLanguage hook
+import { useLanguage } from '../hooks/useLanguage';
+
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <Box
       component="footer"
@@ -48,7 +53,7 @@ export default function Footer() {
                   variant="h5"
                   sx={{ fontWeight: 700, fontSize: "1.5rem" }}
                 >
-                  iPaddyCare
+                  {t('common.company_name')}
                 </Typography>
               </Stack>
               <Typography
@@ -59,7 +64,7 @@ export default function Footer() {
                   lineHeight: 1.5,
                 }}
               >
-                Empowering Sri Lankan farmers with smart agricultural technology.
+                {t('common.company_description')}
               </Typography>
               <Stack direction="row" spacing={2}>
                 {["Globe", "Smartphone"].map((icon, index) => (
@@ -87,32 +92,32 @@ export default function Footer() {
                 variant="h6"
                 sx={{ fontWeight: 600, mb: 2, fontSize: "1.1rem" }}
               >
-                Solutions
+                {t('footer.solutions')}
               </Typography>
               <Stack spacing={1} sx={{ color: "#D1D5DB", fontSize: "0.9rem" }}>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Seed Quality Detection
+                  {t('footer.seed_quality')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Moisture Monitoring
+                  {t('footer.moisture_monitoring')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Soil pH Analysis
+                  {t('footer.soil_ph')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Pest Detection
+                  {t('footer.pest_detection')}
                 </Typography>
               </Stack>
             </Grid>
@@ -122,32 +127,32 @@ export default function Footer() {
                 variant="h6"
                 sx={{ fontWeight: 600, mb: 2, fontSize: "1.1rem" }}
               >
-                Support
+                {t('footer.support')}
               </Typography>
               <Stack spacing={1} sx={{ color: "#D1D5DB", fontSize: "0.9rem" }}>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Documentation
+                  {t('footer.documentation')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Training Videos
+                  {t('footer.training_videos')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  Expert Consultation
+                  {t('footer.expert_consultation')}
                 </Typography>
                 <Typography
                   component={motion.div}
                   whileHover={{ color: "white" }}
                 >
-                  24/7 Support
+                  {t('footer.support_24_7')}
                 </Typography>
               </Stack>
             </Grid>
@@ -157,13 +162,13 @@ export default function Footer() {
                 variant="h6"
                 sx={{ fontWeight: 600, mb: 2, fontSize: "1.1rem" }}
               >
-                Contact
+                {t('footer.contact')}
               </Typography>
               <Stack spacing={1} sx={{ color: "#D1D5DB", fontSize: "0.9rem" }}>
-                <Typography>iPaddyCare</Typography>
-                <Typography>Sri Lanka</Typography>
-                <Typography>ipaddycare@gmail.com</Typography>
-                <Typography>+94 11 234 5678</Typography>
+                <Typography>{t('footer.company')}</Typography>
+                <Typography>{t('footer.country')}</Typography>
+                <Typography>{t('footer.email')}</Typography>
+                <Typography>{t('footer.phone')}</Typography>
               </Stack>
             </Grid>
           </Grid>
@@ -176,25 +181,27 @@ export default function Footer() {
             sx={{ justifyContent: "space-between", alignItems: "center" }}
           >
             <Typography sx={{ color: "#D1D5DB", fontSize: "0.9rem" }}>
-              © 2025 iPaddyCare. All rights reserved.
+              {t('footer.copyright')}
             </Typography>
             <Stack direction="row" spacing={3}>
-              {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
-                (item, index) => (
-                  <Typography
-                    key={index}
-                    component={motion.div}
-                    whileHover={{ color: "white" }}
-                    sx={{
-                      color: "#D1D5DB",
-                      fontSize: "0.9rem",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {item}
-                  </Typography>
-                )
-              )}
+              {[
+                t('footer.privacy_policy'),
+                t('footer.terms_of_service'),
+                t('footer.cookie_policy')
+              ].map((item, index) => (
+                <Typography
+                  key={index}
+                  component={motion.div}
+                  whileHover={{ color: "white" }}
+                  sx={{
+                    color: "#D1D5DB",
+                    fontSize: "0.9rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  {item}
+                </Typography>
+              ))}
             </Stack>
           </Stack>
         </motion.div>
