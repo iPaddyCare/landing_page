@@ -2,27 +2,17 @@
 
 import { useState, useEffect } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
   Container,
   Grid,
   Card,
   CardContent,
   Box,
   Stack,
-  IconButton,
   Badge,
   Divider,
   LinearProgress,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Menu,
-  MenuItem,
+  Typography,
+  Button,
 } from "@mui/material";
 import {
   Agriculture as LeafIcon,
@@ -42,14 +32,13 @@ import {
   Language as GlobeIcon,
   PlayCircleOutline as PlayCircleIcon,
   Star as StarIcon,
-  Menu as MenuIcon,
-  KeyboardArrowDown as ArrowDownIcon,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
@@ -58,7 +47,7 @@ import "@fontsource/poppins/700.css";
 import { useLanguage } from '../hooks/useLanguage';
 
 export default function Home() {
-  const { t, language, changeLanguage } = useLanguage(); // Use your custom hook instead of next-i18next
+  const { t } = useLanguage(); // Use your custom hook instead of next-i18next
   
   const [activeFeature, setActiveFeature] = useState(0);
   const [visibleSections, setVisibleSections] = useState({
@@ -69,8 +58,6 @@ export default function Home() {
     marketplace: false,
     contact: false,
   });
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -97,143 +84,9 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
-  const handleLanguageMenuOpen = (event) => {
-    setLanguageMenuAnchor(event.currentTarget);
-  };
 
-  const handleLanguageMenuClose = () => {
-    setLanguageMenuAnchor(null);
-  };
 
-  const handleLanguageChange = (newLanguage) => {
-    changeLanguage(newLanguage);
-    handleLanguageMenuClose();
-  };
-
-  const navItems = [
-    t('navigation.features'),
-    t('navigation.benefits'), 
-    t('navigation.mobile_app'),
-    t('navigation.contact')
-  ];
-
-  const drawer = (
-    <Box
-      sx={{
-        bgcolor: "rgba(255, 255, 255, 0.9)",
-        backdropFilter: "blur(10px)",
-        height: "100%",
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-      onClick={handleDrawerToggle}
-    >
-      <Box>
-        <Box
-          sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2, pl: 1 }}
-        >
-          <Image
-            src="/images/logo.png"
-            alt={`${t('common.company_name')} Logo`}
-            width={24}
-            height={24}
-            style={{ height: "auto", maxWidth: "100%" }}
-          />
-          <Typography variant="h6" sx={{ fontWeight: 700, color: "#1F2A44" }}>
-            {t('common.company_name')}
-          </Typography>
-        </Box>
-        <List>
-          {navItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                component={Link}
-                href={`#${
-                  item === t('navigation.mobile_app')
-                    ? "app"
-                    : item.toLowerCase().replace(" ", "")
-                }`}
-                scroll={true}
-                sx={{
-                  py: 1.5,
-                  "&:hover": { bgcolor: "rgba(212, 160, 23, 0.1)" },
-                }}
-              >
-                <ListItemText
-                  primary={item}
-                  primaryTypographyProps={{
-                    sx: {
-                      color: "#1F2A44",
-                      fontWeight: 500,
-                      fontSize: "1rem",
-                    },
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        
-        {/* Language Switcher for Mobile */}
-        <Box sx={{ mb: 2, px: 2 }}>
-          <Button
-            component={motion.button}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            variant="outlined"
-            startIcon={<GlobeIcon />}
-            endIcon={<ArrowDownIcon />}
-            fullWidth
-            onClick={handleLanguageMenuOpen}
-            sx={{
-              borderColor: "#2F855A",
-              color: "#2F855A",
-              "&:hover": {
-                bgcolor: "#2F855A11",
-                borderColor: "#2F855A",
-              },
-              py: 1.5,
-              borderRadius: 4,
-              fontWeight: 600,
-              fontSize: "0.9rem",
-              textTransform: "uppercase",
-            }}
-          >
-            {language === 'en' ? 'English' : language === 'si' ? 'සිංහල' : 'தமிழ்'}
-          </Button>
-        </Box>
-      </Box>
-      <Button
-        component={motion.button}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        variant="contained"
-        sx={{
-          bgcolor: "#D4A017",
-          color: "#1F2A44",
-          "&:hover": {
-            bgcolor: "#E0B84B",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-          },
-          px: 4,
-          py: 1.5,
-          borderRadius: 6,
-          fontWeight: 600,
-          fontSize: "1rem",
-          mx: 2,
-          mb: 2,
-        }}
-      >
-        {t('navigation.get_started')}
-      </Button>
-    </Box>
-  );
 
   const features = [
     {
@@ -342,207 +195,7 @@ export default function Home() {
         }}
       >
         {/* Navigation */}
-        <AppBar
-          position="sticky"
-          sx={{
-            bgcolor: "rgba(255, 255, 255, 0.85)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-            py: 1,
-          }}
-        >
-          <Toolbar
-            sx={{
-              maxWidth: "xl",
-              width: "100%",
-              mx: "auto",
-              px: { xs: 1, md: 2 },
-              overflowX: "hidden",
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Image
-                src="/images/logo.png"
-                alt={`${t('common.company_name')} Logo`}
-                width={24}
-                height={24}
-                style={{ height: "auto" }}
-              />
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 700, color: "#1F2A44" }}
-              >
-                {t('common.company_name')}
-              </Typography>
-            </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-                {navItems.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={`#${
-                      item === t('navigation.mobile_app')
-                        ? "app"
-                        : item.toLowerCase().replace(" ", "")
-                    }`}
-                    scroll={true}
-                  >
-                    <Typography
-                      component={motion.div}
-                      whileHover={{ scale: 1.1, color: "#D4A017" }}
-                      sx={{
-                        color: "#1F2A44",
-                        fontWeight: 500,
-                        fontSize: "1rem",
-                        transition: "color 0.3s ease",
-                      }}
-                    >
-                      {item}
-                    </Typography>
-                  </Link>
-                ))}
-              </Box>
-              
-              {/* Language Switcher */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Button
-                  component={motion.button}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  variant="outlined"
-                  startIcon={<GlobeIcon />}
-                  endIcon={<ArrowDownIcon />}
-                  onClick={handleLanguageMenuOpen}
-                  sx={{
-                    borderColor: "#2F855A",
-                    color: "#2F855A",
-                    "&:hover": {
-                      bgcolor: "#2F855A11",
-                      borderColor: "#2F855A",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    },
-                    px: 2,
-                    py: 1,
-                    borderRadius: 4,
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {language.toUpperCase()}
-                </Button>
-                <Menu
-                  anchorEl={languageMenuAnchor}
-                  open={Boolean(languageMenuAnchor)}
-                  onClose={handleLanguageMenuClose}
-                  PaperProps={{
-                    sx: {
-                      mt: 1,
-                      minWidth: 120,
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-                      borderRadius: 2,
-                      border: "1px solid rgba(255, 255, 255, 0.2)",
-                      backdropFilter: "blur(10px)",
-                    },
-                  }}
-                >
-                  <MenuItem 
-                    onClick={() => handleLanguageChange('en')}
-                    sx={{
-                      color: language === 'en' ? "#2F855A" : "#4B5563",
-                      fontWeight: language === 'en' ? 600 : 400,
-                      "&:hover": { bgcolor: "#2F855A11" },
-                    }}
-                  >
-                    English
-                  </MenuItem>
-                  <MenuItem 
-                    onClick={() => handleLanguageChange('si')}
-                    sx={{
-                      color: language === 'si' ? "#2F855A" : "#4B5563",
-                      fontWeight: language === 'si' ? 600 : 400,
-                      "&:hover": { bgcolor: "#2F855A11" },
-                    }}
-                  >
-                    සිංහල
-                  </MenuItem>
-                  <MenuItem 
-                    onClick={() => handleLanguageChange('ta')}
-                    sx={{
-                      color: language === 'ta' ? "#2F855A" : "#4B5563",
-                      fontWeight: language === 'ta' ? 600 : 400,
-                      "&:hover": { bgcolor: "#2F855A11" },
-                    }}
-                  >
-                    தமிழ்
-                  </MenuItem>
-                </Menu>
-              </Box>
-              
-              <Button
-                component={motion.button}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                variant="contained"
-                sx={{
-                  bgcolor: "#D4A017",
-                  color: "#1F2A44",
-                  "&:hover": {
-                    bgcolor: "#E0B84B",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                  },
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 6,
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                }}
-                onClick={() => {
-                  /* Add navigation logic for Get Started */
-                }}
-              >
-                {t('navigation.get_started')}
-              </Button>
-            </Box>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={handleDrawerToggle}
-              sx={{ display: { xs: "flex", md: "none" }, color: "#1F2A44" }}
-            >
-              <MenuIcon sx={{ fontSize: 32 }} />
-            </IconButton>
-          </Toolbar>
-          <Drawer
-            anchor="right"
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                width: 250,
-                boxSizing: "border-box",
-                bgcolor: "transparent",
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </AppBar>
+        <Navbar />
 
         {/* Hero Section */}
         <Box

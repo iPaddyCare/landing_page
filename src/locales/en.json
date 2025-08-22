@@ -1,7 +1,8 @@
 {
   "common": {
     "company_name": "iPaddyCare",
-    "company_description": "Empowering Sri Lankan farmers with smart agricultural technology."
+    "company_description": "Empowering Sri Lankan farmers with smart agricultural technology.",
+    "back_to_home": "Back to Home"
   },
   "navigation": {
     "features": "Features",
