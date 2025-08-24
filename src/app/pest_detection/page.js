@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import {
-  ArrowBack,
   BugReport,
   PhotoCamera,
   TrendingUp,
@@ -9,7 +8,6 @@ import {
   Verified as AwardIcon,
   Language as GlobeIcon,
   CheckCircle,
-  Menu as MenuIcon,
   PlayArrow as PlayArrowIcon,
 } from "@mui/icons-material";
 import {
@@ -22,38 +20,22 @@ import {
   Stack,
   Paper,
   Chip,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Badge,
   Container,
+  IconButton,
 } from "@mui/material";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/hooks/useLanguage";
 
 const PestDetectionPage = () => {
   const { t } = useLanguage();
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const navItems = [
-    { key: "features", label: t("navigation.features") },
-    { key: "benefits", label: t("navigation.benefits") },
-    { key: "mobile_app", label: t("navigation.mobile_app") },
-    { key: "contact", label: t("navigation.contact") },
-  ];
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   const [visibleSections, setVisibleSections] = useState({
     hero: false,
@@ -85,90 +67,9 @@ const PestDetectionPage = () => {
     return () => observer.disconnect();
   }, []);
 
-  const drawer = (
-    <Box
-      sx={{
-        bgcolor: "rgba(255, 255, 255, 0.9)",
-        backdropFilter: "blur(10px)",
-        height: "100%",
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-      onClick={handleDrawerToggle}
-    >
-      <Box>
-        <Box
-          sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2, pl: 1 }}
-        >
-          <Image
-            src="/images/logo.png"
-            alt="iPaddyCare Logo"
-            width={24}
-            height={24}
-            style={{ height: "auto", maxWidth: "100%" }}
-          />
-          <Typography variant="h6" sx={{ fontWeight: 700, color: "#1F2A44" }}>
-            {t("common.company_name")}
-          </Typography>
-        </Box>
-        <List>
-          {navItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                component={Link}
-                href={`#${
-                  item.key === "mobile_app"
-                    ? "app"
-                    : item.key.toLowerCase().replace("_", "")
-                }`}
-                scroll={true}
-                sx={{
-                  py: 1.5,
-                  "&:hover": { bgcolor: "rgba(212, 160, 23, 0.1)" },
-                }}
-              >
-                <ListItemText
-                  primary={item.label}
-                  primaryTypographyProps={{
-                    sx: {
-                      color: "#1F2A44",
-                      fontWeight: 500,
-                      fontSize: "1rem",
-                    },
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-      <Button
-        component={motion.button}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        variant="contained"
-        sx={{
-          bgcolor: "#D4A017",
-          color: "#1F2A44",
-          "&:hover": {
-            bgcolor: "#E0B84B",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-          },
-          px: 4,
-          py: 1.5,
-          borderRadius: 6,
-          fontWeight: 600,
-          fontSize: "1rem",
-          mx: 2,
-          mb: 2,
-        }}
-      >
-        {t("navigation.get_started")}
-      </Button>
-    </Box>
-  );
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
 
   const steps = [
     {
@@ -205,162 +106,59 @@ const PestDetectionPage = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #F8FAFC 0%, #F0FDF4 100%)",
-        fontFamily: "Poppins, sans-serif",
-      }}
-    >
-      {/* Navigation */}
-      <AppBar
-        position="sticky"
+    <>
+      <style>{`html { scroll-behavior: smooth; }`}</style>
+      <Box
         sx={{
-          bgcolor: "rgba(255, 255, 255, 0.85)",
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-          py: 1,
+          minHeight: "100vh",
+          bgcolor: "#F9FAFB",
+          fontFamily: "Poppins, sans-serif",
+          position: "relative",
         }}
       >
-        <Toolbar
-          sx={{
-            maxWidth: "xl",
-            width: "100%",
-            mx: "auto",
-            px: { xs: 1, md: 2 },
-            overflowX: "hidden",
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <Image
-              src="/images/logo.png"
-              alt="iPaddyCare Logo"
-              width={24}
-              height={24}
-              style={{ height: "auto" }}
-            />
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 700, color: "#1F2A44", fontSize: "1.5rem" }}
-            >
-              {t("common.company_name")}
-            </Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-              {navItems.map((item, index) => (
-                <Link
-                  key={index}
-                  href={`#${
-                    item.key === "mobile_app"
-                      ? "app"
-                      : item.key.toLowerCase().replace("_", "")
-                  }`}
-                  scroll={true}
-                >
-                  <Typography
-                    component={motion.div}
-                    whileHover={{ scale: 1.1, color: "#D4A017" }}
-                    sx={{
-                      color: "#1F2A44",
-                      fontWeight: 500,
-                      fontSize: "1rem",
-                      transition: "color 0.3s ease",
-                    }}
-                  >
-                    {item.label}
-                  </Typography>
-                </Link>
-              ))}
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <Link href="/" style={{ textDecoration: "none" }}>
-                <Button
-                  startIcon={<ArrowBack />}
-                  variant="outlined"
-                  sx={{
-                    borderColor: "#2F855A",
-                    color: "#2F855A",
-                    "&:hover": {
-                      bgcolor: "#2F855A11",
-                      borderColor: "#2F855A",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    },
-                    px: 3,
-                    py: 1,
-                    borderRadius: 6,
-                    fontWeight: 600,
-                    fontSize: "1rem",
-                  }}
-                >
-                  {t("pest_detection.back_to_home")}
-                </Button>
-              </Link>
-              <Button
-                component={motion.button}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                variant="contained"
-                sx={{
-                  bgcolor: "#D4A017",
-                  color: "#1F2A44",
-                  "&:hover": {
-                    bgcolor: "#E0B84B",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                  },
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 6,
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                }}
-              >
-                {t("navigation.get_started")}
-              </Button>
-            </Box>
-          </Box>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerToggle}
-            sx={{ display: { xs: "flex", md: "none" }, color: "#1F2A44" }}
-          >
-            <MenuIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-        </Toolbar>
-        <Drawer
-          anchor="right"
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              width: 250,
-              boxSizing: "border-box",
-              bgcolor: "transparent",
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </AppBar>
+        {/* Navigation */}
+        <Navbar showBackButton={true} />
 
-      {/* Main Content */}
-      <Box sx={{ py: { xs: 4, lg: 6 }, px: { xs: 2, lg: 6 } }}>
+        {/* Particles Background */}
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            particles: {
+              number: { value: 50, density: { enable: true, value_area: 800 } },
+              color: { value: ["#2F855A", "#D4A017", "#F7E7CE"] },
+              shape: { type: "circle" },
+              opacity: { value: 0.5, random: true },
+              size: { value: 3, random: true },
+              move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                random: true,
+                out_mode: "out",
+              },
+            },
+            interactivity: {
+              events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" },
+              },
+              modes: { repulse: { distance: 100 }, push: { quantity: 4 } },
+            },
+            detectRetina: true,
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 0,
+          }}
+        />
+
         {/* Hero Section */}
         <Box
           id="hero"
@@ -974,11 +772,11 @@ const PestDetectionPage = () => {
             </motion.div>
           </Container>
         </Box>
-      </Box>
 
       <Footer />
       <ScrollToTopButton />
     </Box>
+    </>
   );
 };
 

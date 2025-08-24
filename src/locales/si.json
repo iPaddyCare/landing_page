@@ -1,7 +1,8 @@
 {
   "common": {
     "company_name": "iPaddyCare",
-    "company_description": "ස්මාර්ට් කෘෂිකර්ම තාක්ෂණය සමඟ ශ්‍රී ලංකාවේ ගොවීන් සවිබල ගැන්වීම."
+    "company_description": "ස්මාර්ට් කෘෂිකර්ම තාක්ෂණය සමඟ ශ්‍රී ලංකාවේ ගොවීන් සවිබල ගැන්වීම.",
+    "back_to_home": "මුල් පිටුවට"
   },
   "navigation": {
     "features": "විශේෂාංග",
