@@ -179,5 +179,40 @@
     "cta_description": "Leverage our AI-driven system and custom sorting machine to achieve unmatched seed purity and efficiency.",
     "start_free_trial": "Start Free Trial",
     "schedule_demo": "Schedule Demo"
-  }
+  },
+  "soil_ph_testing": {
+    "back_to_home": "Back to Home",
+    "get_started": "Get Started",
+    "ai_powered": "AI-Powered",
+    "smart_sorting": "Smart Advisory",
+    "title": "AI-Driven Soil pH Testing",
+    "subtitle": "Precision Farming with Smart Technology",
+    "description": "Revolutionize your farming with our AI-powered soil pH testing system, integrated with a portable device to analyze and recommend treatments, ensuring optimal crop health and productivity.",
+    "start_sorting": "Start Testing Now",
+    "advanced_ai_processing": "Advanced AI soil analysis",
+    "integrated_sorting_machine": "Integrated pH testing device",
+    "high_purity_output": "Accurate soil health insights",
+    "streamlined_workflow": "Streamlined farm workflow",
+    "demo_title": "Watch Our Smart Testing in Action",
+    "demo_description": "See how our AI-powered system reads soil pH values and integrates with our advisory support to guide farmers in optimizing soil conditions.",
+    "video_placeholder": "Demo Video Placeholder (Add Your Video Here)",
+    "video_title": "AI Soil pH Testing Demo",
+    "video_description": "Watch our system analyze soil pH and provide actionable recommendations with precision using AI and a portable testing device.",
+    "steps_title": "How Our System Works",
+    "steps_description": "A seamless process to ensure better harvest predictions with AI and automation",
+    "step_1_title": "Test Soil Sample",
+    "step_1_description": "Use the portable pH device to capture soil readings in real-time",
+    "step_1_placeholder": "Soil Sample Testing",
+    "step_2_title": "AI Soil Analysis",
+    "step_2_description": "Our AI processes pH data to assess soil conditions and predict crop outcomes",
+    "step_2_placeholder": "AI Analysis Interface",
+    "step_3_title": "Advisory Recommendations",
+    "step_3_description": "Get AI-powered guidance on soil correction, crop selection, and fertilizer use",
+    "step_3_placeholder": "Advisory Dashboard",
+    "cta_title": "Transform Your Farming Practices",
+    "cta_description": "Leverage our AI-driven soil testing system with integrated advisory support to achieve unmatched crop yield and efficiency.",
+    "start_free_trial": "Start Free Trial",
+    "schedule_demo": "Schedule Demo"
+}
+
 }
