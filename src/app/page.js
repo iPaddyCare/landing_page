@@ -71,7 +71,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 } // Lowered threshold for better mobile performance
     );
 
     ["hero", "benefits", "features", "app", "marketplace", "contact"].forEach(
@@ -84,14 +84,10 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-
-
-
-
   const features = [
     {
       icon: (
-        <CameraIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <CameraIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
       title: t('features.ai_seed_quality'),
       description: t('features.ai_seed_quality_desc'),
@@ -100,7 +96,7 @@ export default function Home() {
     },
     {
       icon: (
-        <DropletsIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <DropletsIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
       title: t('features.moisture_detection'),
       description: t('features.moisture_detection_desc'),
@@ -109,7 +105,7 @@ export default function Home() {
     },
     {
       icon: (
-        <TestTubeIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <TestTubeIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
       title: t('features.soil_ph'),
       description: t('features.soil_ph_desc'),
@@ -117,7 +113,7 @@ export default function Home() {
       path: "/ph_detection",
     },
     {
-      icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
+      icon: <BugIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />,
       title: t('features.pest_disease'),
       description: t('features.pest_disease_desc'),
       details: t('features.pest_disease_details'),
@@ -129,27 +125,27 @@ export default function Home() {
     {
       icon: (
         <TrendingUpIcon
-          sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }}
+          sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }}
         />
       ),
       title: t('benefits.boost_yields'),
       description: t('benefits.boost_yields_desc'),
     },
     {
-      icon: <ZapIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />,
+      icon: <ZapIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />,
       title: t('benefits.save_time'),
       description: t('benefits.save_time_desc'),
     },
     {
       icon: (
-        <TargetIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
+        <TargetIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />
       ),
       title: t('benefits.high_precision'),
       description: t('benefits.high_precision_desc'),
     },
     {
       icon: (
-        <AwardIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
+        <AwardIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />
       ),
       title: t('benefits.expert_backed'),
       description: t('benefits.expert_backed_desc'),
@@ -167,17 +163,17 @@ export default function Home() {
 
   const marketplaceItems = [
     {
-      icon: <LeafIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      icon: <LeafIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
       title: t('marketplace.seeds_fertilizers'),
       description: t('marketplace.seeds_fertilizers_desc'),
     },
     {
-      icon: <ZapIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      icon: <ZapIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
       title: t('marketplace.tools_equipment'),
       description: t('marketplace.tools_equipment_desc'),
     },
     {
-      icon: <UsersIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
+      icon: <UsersIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
       title: t('marketplace.expert_services'),
       description: t('marketplace.expert_services_desc'),
     },
@@ -202,7 +198,7 @@ export default function Home() {
           id="hero"
           component="section"
           sx={{
-            py: { xs: 8, lg: 12 },
+            py: { xs: 6, lg: 12 },
             px: { xs: 2, lg: 12 },
             position: "relative",
             bgcolor: "transparent",
@@ -233,29 +229,29 @@ export default function Home() {
                 alignItems="center"
                 justifyContent="space-between"
                 sx={{
-                  display: "flex",
-                  flexWrap: "nowrap",
+                  flexDirection: { xs: "column", lg: "row" },
+                  flexWrap: { xs: "wrap", lg: "nowrap" },
                   boxSizing: "border-box",
                 }}
               >
                 {/* Left: Text, Badges, Buttons, Stats */}
-                <Grid item xs={6} sx={{ minWidth: 0, pr: { xs: 1, lg: 2 } }}>
-                  <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} lg={6} sx={{ minWidth: 0, pr: { xs: 0, lg: 2 }, mb: { xs: 3, lg: 0 } }}>
+                  <Stack direction="row" spacing={2} sx={{ mb: 3, flexWrap: "wrap", gap: 1.5 }}>
                     <Badge
                       component={motion.div}
                       whileHover={{ scale: 1.05 }}
                       sx={{
                         bgcolor: "rgba(247, 231, 206, 0.9)",
                         color: "#2F855A",
-                        px: 2,
+                        px: { xs: 1.5, lg: 2 },
                         py: 1,
                         borderRadius: 2,
                         fontWeight: 500,
-                        fontSize: "0.85rem",
+                        fontSize: { xs: "0.75rem", lg: "0.85rem" },
                         backdropFilter: "blur(5px)",
                       }}
                     >
-                      <AwardIcon sx={{ fontSize: 16, mr: 1 }} />
+                      <AwardIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
                       {t('hero.badge_expert_approved')}
                     </Badge>
                     <Badge
@@ -264,15 +260,15 @@ export default function Home() {
                       sx={{
                         bgcolor: "rgba(247, 231, 206, 0.9)",
                         color: "#2F855A",
-                        px: 2,
+                        px: { xs: 1.5, lg: 2 },
                         py: 1,
                         borderRadius: 2,
                         fontWeight: 500,
-                        fontSize: "0.85rem",
+                        fontSize: { xs: "0.75rem", lg: "0.85rem" },
                         backdropFilter: "blur(5px)",
                       }}
                     >
-                      <GlobeIcon sx={{ fontSize: 16, mr: 1 }} />
+                      <GlobeIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
                       {t('hero.badge_multilingual')}
                     </Badge>
                   </Stack>
@@ -280,7 +276,7 @@ export default function Home() {
                     variant="h1"
                     sx={{
                       fontSize: {
-                        xs: "clamp(1.5rem, 5vw, 2.5rem)",
+                        xs: "clamp(1.5rem, 6vw, 2rem)",
                         lg: "clamp(3rem, 5vw, 4rem)",
                       },
                       fontWeight: 700,
@@ -304,7 +300,7 @@ export default function Home() {
                       mb: 4,
                       maxWidth: "90%",
                       fontWeight: 400,
-                      fontSize: { xs: "0.9rem", lg: "1.1rem" },
+                      fontSize: { xs: "0.85rem", lg: "1.1rem" },
                       lineHeight: 1.6,
                     }}
                   >
@@ -329,11 +325,11 @@ export default function Home() {
                           bgcolor: "#E0B84B",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
                         },
-                        px: 3,
+                        px: { xs: 2, lg: 3 },
                         py: 1,
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: { xs: "0.85rem", lg: "1rem" },
+                        fontSize: { xs: "0.8rem", lg: "1rem" },
                       }}
                     >
                       {t('hero.watch_demo')}
@@ -353,38 +349,39 @@ export default function Home() {
                           borderColor: "#2F855A",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                         },
-                        px: 3,
+                        px: { xs: 2, lg: 3 },
                         py: 1,
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: { xs: "0.85rem", lg: "1rem" },
+                        fontSize: { xs: "0.8rem", lg: "1rem" },
                       }}
                     >
                       {t('hero.download_app')}
                     </Button>
                   </Stack>
                   <Stack
-                    direction="row"
+                    direction={{ xs: "column", sm: "row" }}
                     spacing={2}
                     sx={{
                       color: "#4B5563",
-                      fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                      fontSize: { xs: "0.75rem", lg: "0.9rem" },
+                      gap: { xs: 1.5, lg: 2 },
                     }}
                   >
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <StarIcon
-                        sx={{ color: "#D4A017", fontSize: { xs: 16, lg: 20 } }}
+                        sx={{ color: "#D4A017", fontSize: { xs: 14, lg: 20 } }}
                       />
                       <Typography sx={{ fontWeight: 600 }}>4.9</Typography>
                       <Typography>{t('hero.user_rating')}</Typography>
                     </Stack>
                     <Divider
                       orientation="vertical"
-                      sx={{ height: 20, bgcolor: "#D1D5DB" }}
+                      sx={{ height: 20, bgcolor: "#D1D5DB", display: { xs: "none", sm: "block" } }}
                     />
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <UsersIcon
-                        sx={{ color: "#2F855A", fontSize: { xs: 16, lg: 20 } }}
+                        sx={{ color: "#2F855A", fontSize: { xs: 14, lg: 20 } }}
                       />
                       <Typography sx={{ fontWeight: 600 }}>10K+</Typography>
                       <Typography>{t('hero.active_users')}</Typography>
@@ -392,14 +389,14 @@ export default function Home() {
                   </Stack>
                 </Grid>
                 {/* Right: Image and Card Content */}
-                <Grid item xs={6} sx={{ minWidth: 0, pl: { xs: 1, lg: 2 } }}>
+                <Grid item xs={12} lg={6} sx={{ minWidth: 0, pl: { xs: 0, lg: 2 } }}>
                   <Card
                     component={motion.div}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                     sx={{
-                      p: 2,
+                      p: { xs: 1.5, lg: 2 },
                       bgcolor: "rgba(255, 255, 255, 0.9)",
                       borderRadius: 3,
                       boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
@@ -420,7 +417,7 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                       style={{
                         width: "100%",
-                        maxWidth: "400px",
+                        maxWidth: { xs: "100%", lg: "400px" },
                         height: "auto",
                         borderRadius: 12,
                         marginBottom: 16,
@@ -435,7 +432,7 @@ export default function Home() {
                           sx={{
                             color: "#1F2A44",
                             fontWeight: 600,
-                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                            fontSize: { xs: "0.75rem", lg: "0.9rem" },
                           }}
                         >
                           {t('hero.ai_analysis_accuracy')}
@@ -444,7 +441,7 @@ export default function Home() {
                           sx={{
                             color: "#2F855A",
                             fontWeight: 600,
-                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                            fontSize: { xs: "0.75rem", lg: "0.9rem" },
                           }}
                         >
                           99.5% {t('hero.accurate')}
@@ -454,7 +451,7 @@ export default function Home() {
                         variant="determinate"
                         value={99.5}
                         sx={{
-                          height: 8,
+                          height: { xs: 6, lg: 8 },
                           borderRadius: 4,
                           bgcolor: "#E5E7EB",
                           "& .MuiLinearProgress-bar": {
@@ -468,13 +465,13 @@ export default function Home() {
                         spacing={2}
                         sx={{
                           color: "#4B5563",
-                          fontSize: { xs: "0.75rem", lg: "0.85rem" },
+                          fontSize: { xs: "0.7rem", lg: "0.85rem" },
                         }}
                       >
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <BugIcon
                             sx={{
-                              fontSize: { xs: 14, lg: 16 },
+                              fontSize: { xs: 12, lg: 16 },
                               color: "#3B82F6",
                             }}
                           />
@@ -483,7 +480,7 @@ export default function Home() {
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <TrendingUpIcon
                             sx={{
-                              fontSize: { xs: 14, lg: 16 },
+                              fontSize: { xs: 12, lg: 16 },
                               color: "#8B5CF6",
                             }}
                           />
@@ -515,7 +512,7 @@ export default function Home() {
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.5rem, 4vw, 2rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.25rem, 4vw, 2.75rem)",
                     },
                     fontWeight: 700,
@@ -528,10 +525,10 @@ export default function Home() {
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.85rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
                   {t('benefits.subtitle')}
@@ -542,27 +539,25 @@ export default function Home() {
                 spacing={2}
                 sx={{
                   display: "flex",
-                  flexWrap: "nowrap",
+                  flexWrap: { xs: "wrap", lg: "nowrap" },
                   justifyContent: "center",
-                  overflowX: "auto",
-                  overflowY: "visible",
-                  boxSizing: "border-box",
+                  overflowX: { xs: "auto", lg: "visible" },
                   scrollbarWidth: "none",
                   "&::-webkit-scrollbar": { display: "none" },
-                  pb: 2,
+                  pb: { xs: 1, lg: 2 },
                 }}
               >
                 {benefits.map((benefit, index) => (
                   <Grid
                     key={index}
                     item
-                    xs={3}
+                    xs={6}
+                    lg={3}
                     sx={{
-                      minWidth: 0,
-                      flexShrink: 1,
-                      width: { xs: "22vw", lg: "23vw" },
-                      maxWidth: { xs: "90px", lg: "280px" },
-                      overflow: "visible",
+                      minWidth: { xs: 140, lg: 0 },
+                      maxWidth: { xs: 160, lg: "280px" },
+                      flexShrink: { xs: 0, lg: 1 },
+                      width: { xs: "auto", lg: "23vw" },
                     }}
                   >
                     <Box sx={{ overflow: "visible" }}>
@@ -578,9 +573,9 @@ export default function Home() {
                           boxShadow: "0 12px 24px rgba(0,0,0,0.15)",
                         }}
                         sx={{
-                          p: { xs: 1.5, lg: 2 },
+                          p: { xs: 1, lg: 2 },
                           height: "100%",
-                          maxHeight: { xs: "160px", lg: "200px" },
+                          maxHeight: { xs: "140px", lg: "200px" },
                           borderRadius: 3,
                           bgcolor: "rgba(255, 255, 255, 0.9)",
                           boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
@@ -596,14 +591,14 @@ export default function Home() {
                           <Box
                             sx={{
                               bgcolor: "rgba(247, 231, 206, 0.5)",
-                              width: { xs: 40, lg: 48 },
-                              height: { xs: 40, lg: 48 },
+                              width: { xs: 36, lg: 48 },
+                              height: { xs: 36, lg: 48 },
                               borderRadius: "50%",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
                               mx: "auto",
-                              mb: { xs: 1, lg: 1.5 },
+                              mb: { xs: 0.5, lg: 1.5 },
                             }}
                           >
                             {benefit.icon}
@@ -613,7 +608,7 @@ export default function Home() {
                             sx={{
                               fontWeight: 600,
                               color: "#1F2A44",
-                              fontSize: { xs: "0.8rem", lg: "1rem" },
+                              fontSize: { xs: "0.75rem", lg: "1rem" },
                               lineHeight: 1.2,
                               mb: { xs: 0.5, lg: 1 },
                             }}
@@ -623,10 +618,10 @@ export default function Home() {
                           <Typography
                             sx={{
                               color: "#4B5563",
-                              fontSize: { xs: "0.65rem", lg: "0.85rem" },
+                              fontSize: { xs: "0.6rem", lg: "0.85rem" },
                               lineHeight: 1.3,
                               display: "-webkit-box",
-                              WebkitLineClamp: 2,
+                              WebkitLineClamp: 3,
                               WebkitBoxOrient: "vertical",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
@@ -649,7 +644,7 @@ export default function Home() {
           id="features"
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
           }}
         >
@@ -659,12 +654,12 @@ export default function Home() {
               animate={visibleSections.features ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Box sx={{ textAlign: "center", mb: 6 }}>
+              <Box sx={{ textAlign: "center", mb: { xs: 4, lg: 6 } }}>
                 <Typography
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.5rem, 5vw, 3rem)",
                     },
                     fontWeight: 700,
@@ -677,10 +672,10 @@ export default function Home() {
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
                   {t('features.subtitle')}
@@ -720,7 +715,7 @@ export default function Home() {
                             sx={{
                               width: "100%",
                               maxWidth: 400,
-                              p: { xs: 1.5, lg: 2 },
+                              p: { xs: 1, lg: 2 },
                               cursor: "pointer",
                               border: "1px solid #E5E7EB",
                               bgcolor: "rgba(255, 255, 255, 0.95)",
@@ -736,13 +731,13 @@ export default function Home() {
                               sx={{
                                 display: "flex",
                                 alignItems: "flex-start",
-                                gap: { xs: 1.5, lg: 2 },
-                                p: { xs: 1.5, lg: 2 },
+                                gap: { xs: 1, lg: 2 },
+                                p: { xs: 1, lg: 2 },
                               }}
                             >
                               <Box
                                 sx={{
-                                  p: 1,
+                                  p: { xs: 0.75, lg: 1 },
                                   borderRadius: 2,
                                   bgcolor: "#F7E7CE",
                                   color: "#2F855A",
@@ -756,7 +751,7 @@ export default function Home() {
                                   sx={{
                                     fontWeight: 600,
                                     color: "#1F2A44",
-                                    fontSize: { xs: "1rem", lg: "1.15rem" },
+                                    fontSize: { xs: "0.9rem", lg: "1.15rem" },
                                     lineHeight: 1.2,
                                   }}
                                 >
@@ -765,7 +760,7 @@ export default function Home() {
                                 <Typography
                                   sx={{
                                     color: "#4B5563",
-                                    fontSize: { xs: "0.9rem", lg: "0.95rem" },
+                                    fontSize: { xs: "0.8rem", lg: "0.95rem" },
                                     display: "-webkit-box",
                                     WebkitLineClamp: 2,
                                     WebkitBoxOrient: "vertical",
@@ -789,7 +784,7 @@ export default function Home() {
         </Box>
 
         {/* Mobile App Section */}
-        <Box id="app" component="section" sx={{ py: 12, bgcolor: "#F9FAFB" }}>
+        <Box id="app" component="section" sx={{ py: { xs: 8, lg: 12 }, bgcolor: "#F9FAFB" }}>
           <Container maxWidth="xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -802,6 +797,7 @@ export default function Home() {
                 alignItems="center"
                 justifyContent="center"
                 sx={{
+                  flexDirection: { xs: "column", lg: "row" },
                   flexWrap: { xs: "wrap", lg: "nowrap" },
                   overflow: "hidden",
                   scrollbarWidth: "none",
@@ -816,6 +812,7 @@ export default function Home() {
                     minWidth: 0,
                     flexShrink: 1,
                     order: { xs: 1, lg: 1 },
+                    mb: { xs: 3, lg: 0 },
                   }}
                 >
                   <Card
@@ -824,7 +821,7 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6 }}
                     sx={{
-                      p: 3,
+                      p: { xs: 2, lg: 3 },
                       bgcolor: "rgba(31, 42, 68, 0.95)",
                       borderRadius: 3,
                       boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
@@ -836,7 +833,7 @@ export default function Home() {
                       sx={{
                         bgcolor: "white",
                         borderRadius: 2,
-                        p: 3,
+                        p: { xs: 2, lg: 3 },
                       }}
                     >
                       <Stack
@@ -850,7 +847,7 @@ export default function Home() {
                             sx={{
                               fontWeight: 700,
                               color: "#1F2A44",
-                              fontSize: "1.1rem",
+                              fontSize: { xs: "0.95rem", lg: "1.1rem" },
                             }}
                           >
                             {t('common.company_name')}
@@ -859,24 +856,24 @@ export default function Home() {
                         <Stack direction="row" spacing={1}>
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#EF4444",
                               borderRadius: "50%",
                             }}
                           />
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#F59E0B",
                               borderRadius: "50%",
                             }}
                           />
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#2F855A",
                               borderRadius: "50%",
                             }}
@@ -904,7 +901,7 @@ export default function Home() {
                           boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)",
                         }}
                       />
-                      <Stack spacing={1.5} sx={{ fontSize: "0.9rem" }}>
+                      <Stack spacing={1.5} sx={{ fontSize: { xs: "0.8rem", lg: "0.9rem" } }}>
                         <Stack
                           direction="row"
                           justifyContent="space-between"
@@ -914,7 +911,7 @@ export default function Home() {
                             {t('mobile_app.seed_analysis')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                         <Stack
@@ -926,7 +923,7 @@ export default function Home() {
                             {t('mobile_app.moisture_test')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                         <Stack
@@ -938,7 +935,7 @@ export default function Home() {
                             {t('mobile_app.ph_analysis')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                       </Stack>
@@ -959,23 +956,23 @@ export default function Home() {
                     sx={{
                       bgcolor: "rgba(247, 231, 206, 0.9)",
                       color: "#2F855A",
-                      px: 2,
+                      px: { xs: 1.5, lg: 2 },
                       py: 1,
                       borderRadius: 2,
                       mb: 2,
                       fontWeight: 500,
-                      fontSize: "0.85rem",
+                      fontSize: { xs: "0.75rem", lg: "0.85rem" },
                       backdropFilter: "blur(5px)",
                     }}
                   >
-                    <SmartphoneIcon sx={{ fontSize: 16, mr: 1 }} />
+                    <SmartphoneIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
                     {t('mobile_app.badge')}
                   </Badge>
                   <Typography
                     variant="h2"
                     sx={{
                       fontSize: {
-                        xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                        xs: "clamp(1.5rem, 5vw, 1.75rem)",
                         lg: "clamp(2.5rem, 5vw, 3rem)",
                       },
                       fontWeight: 700,
@@ -989,7 +986,7 @@ export default function Home() {
                     sx={{
                       color: "#4B5563",
                       mb: 3,
-                      fontSize: { xs: "0.9rem", lg: "1rem" },
+                      fontSize: { xs: "0.8rem", lg: "1rem" },
                       lineHeight: 1.6,
                     }}
                   >
@@ -1010,10 +1007,10 @@ export default function Home() {
                         transition={{ duration: 0.5, delay: index * 0.2 }}
                       >
                         <CheckCircleIcon
-                          sx={{ color: "#2F855A", fontSize: 20 }}
+                          sx={{ color: "#2F855A", fontSize: { xs: 18, lg: 20 } }}
                         />
                         <Typography
-                          sx={{ color: "#4B5563", fontSize: "0.9rem" }}
+                          sx={{ color: "#4B5563", fontSize: { xs: "0.8rem", lg: "0.9rem" } }}
                         >
                           {feature}
                         </Typography>
@@ -1035,10 +1032,10 @@ export default function Home() {
                           bgcolor: "#374151",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
                         },
-                        px: 4,
+                        px: { xs: 3, lg: 4 },
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: { xs: "0.8rem", lg: "0.9rem" },
                       }}
                     >
                       {t('mobile_app.download_ios')}
@@ -1058,10 +1055,10 @@ export default function Home() {
                           borderColor: "#1F2A44",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                         },
-                        px: 4,
+                        px: { xs: 3, lg: 4 },
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: { xs: "0.8rem", lg: "0.9rem" },
                       }}
                     >
                       {t('mobile_app.get_android')}
@@ -1078,7 +1075,7 @@ export default function Home() {
           id="marketplace"
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
           }}
         >
@@ -1088,23 +1085,23 @@ export default function Home() {
               animate={visibleSections.marketplace ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Box sx={{ textAlign: "center", mb: 6 }}>
+              <Box sx={{ textAlign: "center", mb: { xs: 4, lg: 6 } }}>
                 <Box
                   sx={{
                     bgcolor: "rgba(247, 231, 206, 0.5)",
-                    p: 2,
+                    p: { xs: 1.5, lg: 2 },
                     borderRadius: "50%",
                     display: "inline-flex",
                     mb: 2,
                   }}
                 >
-                  <ShoppingCartIcon sx={{ color: "#2F855A", fontSize: 36 }} />
+                  <ShoppingCartIcon sx={{ color: "#2F855A", fontSize: { xs: 32, lg: 36 } }} />
                 </Box>
                 <Typography
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.5rem, 5vw, 3rem)",
                     },
                     fontWeight: 700,
@@ -1117,10 +1114,10 @@ export default function Home() {
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
                   {t('marketplace.subtitle')}
@@ -1140,10 +1137,13 @@ export default function Home() {
                 {marketplaceItems.map((item, index) => (
                   <Grid
                     key={index}
+                    item
+                    xs={12}
+                    md={4}
                     sx={{
                       width: { xs: "100%", md: "30%" },
-                      maxWidth: { md: "384px" },
-                      minWidth: 0,
+                      maxWidth: { xs: "100%", md: "384px" },
+                      minWidth: { xs: 280, md: 0 },
                       flexShrink: 1,
                     }}
                   >
@@ -1159,7 +1159,7 @@ export default function Home() {
                         boxShadow: "0 12px 24px rgba(0,0,0,0.15)",
                       }}
                       sx={{
-                        p: 3,
+                        p: { xs: 2, lg: 3 },
                         height: "100%",
                         borderRadius: 3,
                         bgcolor: "rgba(255, 255, 255, 0.9)",
@@ -1173,8 +1173,8 @@ export default function Home() {
                         <Box
                           sx={{
                             bgcolor: "rgba(247, 231, 206, 0.5)",
-                            width: 50,
-                            height: 50,
+                            width: { xs: 40, lg: 50 },
+                            height: { xs: 40, lg: 50 },
                             borderRadius: 2,
                             display: "flex",
                             alignItems: "center",
@@ -1190,7 +1190,7 @@ export default function Home() {
                             fontWeight: 600,
                             color: "#1F2A44",
                             mb: 1,
-                            fontSize: "1.1rem",
+                            fontSize: { xs: "0.95rem", lg: "1.1rem" },
                           }}
                         >
                           {item.title}
@@ -1198,7 +1198,7 @@ export default function Home() {
                         <Typography
                           sx={{
                             color: "#4B5563",
-                            fontSize: "0.9rem",
+                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
                             lineHeight: 1.5,
                           }}
                         >
@@ -1217,7 +1217,7 @@ export default function Home() {
         <Box
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "#2F855A",
             textAlign: "center",
             position: "relative",
@@ -1246,7 +1246,7 @@ export default function Home() {
                 variant="h2"
                 sx={{
                   fontSize: {
-                    xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                    xs: "clamp(1.5rem, 5vw, 1.75rem)",
                     lg: "clamp(2.5rem, 5vw, 3rem)",
                   },
                   fontWeight: 700,
@@ -1260,10 +1260,10 @@ export default function Home() {
                 sx={{
                   color: "#F9FAFB",
                   mb: 4,
-                  maxWidth: "48rem",
+                  maxWidth: { xs: "90%", lg: "48rem" },
                   mx: "auto",
                   fontWeight: 400,
-                  fontSize: { xs: "0.9rem", lg: "1rem" },
+                  fontSize: { xs: "0.8rem", lg: "1rem" },
                 }}
               >
                 {t('cta.subtitle')}
@@ -1286,11 +1286,11 @@ export default function Home() {
                       bgcolor: "#E0B84B",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                     },
-                    px: 5,
+                    px: { xs: 4, lg: 5 },
                     py: 1.5,
                     borderRadius: 6,
                     fontWeight: 600,
-                    fontSize: "1rem",
+                    fontSize: { xs: "0.85rem", lg: "1rem" },
                   }}
                 >
                   {t('cta.start_free_trial')}
@@ -1309,11 +1309,11 @@ export default function Home() {
                       color: "#2F855A",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                     },
-                    px: 5,
+                    px: { xs: 4, lg: 5 },
                     py: 1.5,
                     borderRadius: 6,
                     fontWeight: 600,
-                    fontSize: "1rem",
+                    fontSize: { xs: "0.85rem", lg: "1rem" },
                   }}
                 >
                   {t('cta.schedule_demo')}
