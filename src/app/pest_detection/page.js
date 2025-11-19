@@ -1,494 +1,783 @@
-"use client"
-import { motion } from "framer-motion"
-import { ArrowBack, BugReport, PhotoCamera, TrendingUp, Assessment, Verified, Language, CheckCircle } from "@mui/icons-material"
-import { Box, Container, Typography, Grid, Card, CardContent, Button, Stack, Paper, Chip } from "@mui/material"
-import Link from "next/link"
+"use client";
+import { motion } from "framer-motion";
+import {
+  BugReport,
+  PhotoCamera,
+  TrendingUp,
+  Assessment,
+  Verified as AwardIcon,
+  Language as GlobeIcon,
+  CheckCircle,
+  PlayArrow as PlayArrowIcon,
+} from "@mui/icons-material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+  Stack,
+  Paper,
+  Chip,
+  Badge,
+  Container,
+  IconButton,
+} from "@mui/material";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const PestDetectionPage = () => {
+  const { t } = useLanguage();
+
+  const [visibleSections, setVisibleSections] = useState({
+    hero: false,
+    demo: false,
+    steps: false,
+    cta: false,
+  });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => ({
+              ...prev,
+              [entry.target.id]: true,
+            }));
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    ["hero", "demo", "steps", "cta"].forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
+
   const steps = [
     {
       step: "1",
-      title: "Take Photo of a Spot You Suspect Has Been Damaged by Pests or Disease",
-      description: "Capture a clear photo of the affected plant area using the mobile app",
+      title: t("pest_detection.step_1_title"),
+      description: t("pest_detection.step_1_description"),
       icon: PhotoCamera,
       color: "#2F855A",
+      placeholder: t("pest_detection.step_1_placeholder"),
     },
     {
       step: "2",
-      title: "AI Analyzes Photo and Identifies Pest or Disease",
-      description: "Our AI automatically analyzes the photo and identifies the specific pest or disease",
+      title: t("pest_detection.step_2_title"),
+      description: t("pest_detection.step_2_description"),
       icon: TrendingUp,
       color: "#2563EB",
+      placeholder: t("pest_detection.step_2_placeholder"),
     },
     {
       step: "3",
-      title: "Receive Treatment Plan and Recommendations",
-      description: "Get detailed information and a personalized treatment plan based on the AI analysis",
+      title: t("pest_detection.step_3_title"),
+      description: t("pest_detection.step_3_description"),
       icon: Assessment,
       color: "#7C3AED",
+      placeholder: t("pest_detection.step_3_placeholder"),
     },
-  ]
+  ];
 
-  const features = ["Mobile photo capture", "AI pest identification", "Treatment suggestions", "Supplier locations"]
+  const features = [
+    t("pest_detection.mobile_photo_capture"),
+    t("pest_detection.ai_pest_identification"),
+    t("pest_detection.treatment_suggestions"),
+    t("pest_detection.supplier_locations"),
+  ];
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #F8FAFC 0%, #F0FDF4 100%)",
-        fontFamily: "Poppins, sans-serif",
-      }}
-    >
-      <Container maxWidth="xl" sx={{ py: { xs: 4, lg: 6 }, px: { xs: 2, lg: 6 } }}>
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBack />}
-              sx={{
-                borderColor: '#D4A017',
-                color: '#D4A017',
-                '&:hover': {
-                  borderColor: '#E0B84B',
-                  bgcolor: 'rgba(212, 160, 23, 0.04)',
-                },
-                mb: 4,
-                borderRadius: 2,
-                fontWeight: 600,
-              }}
-            >
-              Back to Home
-            </Button>
-          </Link>
-        </motion.div>
+    <>
+      <style>{`html { scroll-behavior: smooth; }`}</style>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          bgcolor: "#F9FAFB",
+          fontFamily: "Poppins, sans-serif",
+          position: "relative",
+        }}
+      >
+        {/* Navigation */}
+        <Navbar showBackButton={true} />
+
+        {/* Particles Background */}
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            particles: {
+              number: { value: 50, density: { enable: true, value_area: 800 } },
+              color: { value: ["#2F855A", "#D4A017", "#F7E7CE"] },
+              shape: { type: "circle" },
+              opacity: { value: 0.5, random: true },
+              size: { value: 3, random: true },
+              move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                random: true,
+                out_mode: "out",
+              },
+            },
+            interactivity: {
+              events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" },
+              },
+              modes: { repulse: { distance: 100 }, push: { quantity: 4 } },
+            },
+            detectRetina: true,
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 0,
+          }}
+        />
 
         {/* Hero Section */}
-        <Grid container spacing={4} sx={{ mb: 8 }}>
-          <Grid item xs={12} lg={8}>
+        <Box
+          id="hero"
+          component="section"
+          sx={{
+            py: { xs: 8, lg: 12 },
+            px: { xs: 2, lg: 12 },
+            position: "relative",
+            bgcolor: "transparent",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            component={motion.div}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            sx={{
+              position: "absolute",
+              inset: 0,
+              bgcolor: "linear-gradient(135deg, #F7E7CE33 0%, #2F855A11 100%)",
+              transform: "translateY(10%)",
+            }}
+          />
+          <Container maxWidth="xl" disableGutters>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={visibleSections.hero ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Stack spacing={3} sx={{ maxWidth: "md", mx: "auto" }}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    mb: 3,
+                    justifyContent: { xs: "center", md: "flex-start" },
+                  }}
+                >
+                  <Badge
+                    component={motion.div}
+                    whileHover={{ scale: 1.05 }}
+                    sx={{
+                      bgcolor: "rgba(247, 231, 206, 0.9)",
+                      color: "#2F855A",
+                      px: 2,
+                      py: 1,
+                      borderRadius: 2,
+                      fontWeight: 500,
+                      fontSize: "0.85rem",
+                      backdropFilter: "blur(5px)",
+                    }}
+                  >
+                    <AwardIcon sx={{ fontSize: 16, mr: 1 }} />
+                    {t("pest_detection.ai_powered")}
+                  </Badge>
+                  <Badge
+                    component={motion.div}
+                    whileHover={{ scale: 1.05 }}
+                    sx={{
+                      bgcolor: "rgba(247, 231, 206, 0.9)",
+                      color: "#2F855A",
+                      px: 2,
+                      py: 1,
+                      borderRadius: 2,
+                      fontWeight: 500,
+                      fontSize: "0.85rem",
+                      backdropFilter: "blur(5px)",
+                    }}
+                  >
+                    <GlobeIcon sx={{ fontSize: 16, mr: 1 }} />
+                    {t("pest_detection.instant_detection")}
+                  </Badge>
+                </Stack>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontWeight: 700,
+                    color: "#1F2A44",
+                    fontSize: {
+                      xs: "clamp(1.5rem, 5vw, 2.5rem)",
+                      lg: "clamp(3rem, 5vw, 4rem)",
+                    },
+                    lineHeight: 1.2,
+                    textAlign: { xs: "center", md: "left" },
+                  }}
+                >
+                  {t("pest_detection.title")}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#4B5563",
+                    fontWeight: 400,
+                    fontSize: { xs: "0.9rem", lg: "1.1rem" },
+                    lineHeight: 1.5,
+                    textAlign: { xs: "center", md: "left" },
+                  }}
+                >
+                  {t("pest_detection.subtitle")}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#4B5563",
+                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    lineHeight: 1.8,
+                    maxWidth: "90%",
+                    textAlign: { xs: "center", md: "left" },
+                    mx: { xs: "auto", md: 0 },
+                  }}
+                >
+                  {t("pest_detection.description")}
+                </Typography>
+                {/* System Highlights Integrated */}
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={2}
+                  sx={{
+                    mt: 3,
+                    justifyContent: { xs: "center", md: "flex-start" },
+                  }}
+                >
+                  {features.map((feature, index) => (
+                    <Box
+                      key={index}
+                      component={motion.div}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={visibleSections.hero ? { opacity: 1, x: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.4 + index * 0.2 }}
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                      }}
+                      sx={{
+                        bgcolor: "rgba(255, 255, 255, 0.9)",
+                        borderRadius: 2,
+                        p: 2,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1.5,
+                        flex: 1,
+                        border: "1px solid rgba(212, 160, 23, 0.2)",
+                        backdropFilter: "blur(5px)",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          bgcolor: "#D4A017",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          color: "#1F2A44",
+                          fontSize: "0.85rem",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {feature}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+                <Button
+                  component={motion.button}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#D4A017",
+                    color: "#1F2937",
+                    "&:hover": {
+                      bgcolor: "#E0B84B",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                    },
+                    px: 5,
+                    py: 1.5,
+                    borderRadius: 6,
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    mt: 3,
+                    alignSelf: { xs: "center", md: "flex-start" },
+                  }}
+                >
+                  {t("pest_detection.start_detection")}
+                </Button>
+              </Stack>
+            </motion.div>
+          </Container>
+        </Box>
+
+        {/* Demo Video Section */}
+        <Box
+          id="demo"
+          component="section"
+          sx={{
+            py: 8,
+            bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <Container maxWidth="xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={visibleSections.demo ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-                <Chip
-                  icon={<Verified sx={{ fontSize: 16 }} />}
-                  label="AI Powered"
-                  sx={{
-                    bgcolor: "rgba(34, 197, 94, 0.1)",
-                    color: "#166534",
-                    fontWeight: 500,
-                    '&:hover': {
-                      bgcolor: "rgba(34, 197, 94, 0.2)",
-                    },
-                  }}
-                />
-                <Chip
-                  icon={<Language sx={{ fontSize: 16 }} />}
-                  label="Instant Results"
-                  sx={{
-                    bgcolor: "rgba(59, 130, 246, 0.1)",
-                    color: "#1E40AF",
-                    fontWeight: 500,
-                    '&:hover': {
-                      bgcolor: "rgba(59, 130, 246, 0.2)",
-                    },
-                  }}
-                />
-              </Stack>
-
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                <Box sx={{ p: 1.5, bgcolor: 'rgba(34, 197, 94, 0.1)', borderRadius: 3, mr: 2 }}>
-                  <BugReport sx={{ fontSize: { xs: 48, lg: 64 }, color: "#2F855A" }} />
-                </Box>
+              <Box sx={{ textAlign: "center", mb: 4 }}>
                 <Typography
                   variant="h2"
                   sx={{
                     fontWeight: 700,
-                    color: "#1F2937",
-                    fontSize: { xs: "2.5rem", md: "3.5rem", lg: "4rem" },
-                    lineHeight: 1.1,
-                  }}
-                >
-                  Pest & Disease Detection
-                </Typography>
-              </Box>
-
-              <Typography
-                variant="h5"
-                sx={{
-                  color: "#6B7280",
-                  mb: 3,
-                  fontWeight: 500,
-                  lineHeight: 1.4,
-                }}
-              >
-                Early pest and disease detection with mobile imaging
-              </Typography>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#374151",
-                  lineHeight: 1.7,
-                  fontSize: "1.125rem",
-                }}
-              >
-                Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and
-                supplier locations.
-              </Typography>
-            </motion.div>
-          </Grid>
-
-          <Grid item xs={12} lg={4}>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Card
-                sx={{
-                  height: '100%',
-                  border: 'none',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                  bgcolor: 'rgba(255, 255, 255, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: 3,
-                  p: 4,
-                  position: 'relative',
-                  right: { lg: -4 },
-                  ml: 'auto',
-                }}
-              >
-                <Typography variant="h5" sx={{ mb: 3, fontWeight: 600, color: "#1F2937" }}>
-                  Key Features
-                </Typography>
-                <Stack spacing={2}>
-                  {features.map((feature, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#2F855A' }} />
-                        <Typography variant="body1" sx={{ color: '#374151', fontWeight: 500 }}>
-                          {feature}
-                        </Typography>
-                      </Box>
-                    </motion.div>
-                  ))}
-                </Stack>
-              </Card>
-            </motion.div>
-          </Grid>
-        </Grid>
-
-        {/* Demo Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          style={{ marginBottom: '4rem' }}
-        >
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Typography variant="h3" sx={{ fontWeight: 600, color: "#1F2937", mb: 2 }}>
-              AI-Powered Pest Detection
-            </Typography>
-            <Typography variant="h6" sx={{ color: "#6B7280", maxWidth: 600, mx: 'auto' }}>
-              See how our AI identifies pests and diseases from plant photos
-            </Typography>
-          </Box>
-
-          <Card
-            sx={{
-              maxWidth: 1000,
-              mx: 'auto',
-              border: 'none',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-              overflow: 'hidden',
-              borderRadius: 3,
-            }}
-          >
-            <Box
-              sx={{
-                aspectRatio: '16/9',
-                background: 'linear-gradient(135deg, #DCFCE7 0%, #DBEAFE 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-              }}
-            >
-              <Box sx={{ textAlign: 'center' }}>
-                <motion.div
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <BugReport sx={{ fontSize: 96, color: "#2F855A", mb: 2 }} />
-                </motion.div>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: "#374151", mb: 1 }}>
-                  Pest Detection Demo
-                </Typography>
-                <Typography variant="body1" sx={{ color: "#6B7280" }}>
-                  Interactive demonstration of AI pest identification
-                </Typography>
-              </Box>
-
-              {/* Floating elements */}
-              <motion.div
-                style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  left: '1rem',
-                  width: '12px',
-                  height: '12px',
-                  backgroundColor: '#4ADE80',
-                  borderRadius: '50%',
-                }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              />
-              <motion.div
-                style={{
-                  position: 'absolute',
-                  top: '2rem',
-                  right: '2rem',
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#60A5FA',
-                  borderRadius: '50%',
-                }}
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
-              />
-              <motion.div
-                style={{
-                  position: 'absolute',
-                  bottom: '1.5rem',
-                  left: '2rem',
-                  width: '16px',
-                  height: '16px',
-                  backgroundColor: '#FBBF24',
-                  borderRadius: '50%',
-                }}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, delay: 1 }}
-              />
-            </Box>
-          </Card>
-        </motion.div>
-
-        {/* Steps Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" sx={{ fontWeight: 600, color: "#1F2937", mb: 2 }}>
-              How It Works
-            </Typography>
-            <Typography variant="h6" sx={{ color: "#6B7280", maxWidth: 600, mx: 'auto' }}>
-              Follow these simple steps to detect pests and diseases
-            </Typography>
-          </Box>
-
-          <Stack spacing={4}>
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
-              >
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 4,
-                    border: '1px solid #E5E7EB',
-                    borderRadius: 3,
-                    bgcolor: 'rgba(255, 255, 255, 0.8)',
-                    backdropFilter: 'blur(10px)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                      transform: 'translateY(-4px)',
+                    color: "#1F2A44",
+                    fontSize: {
+                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      lg: "clamp(2.5rem, 5vw, 3rem)",
                     },
+                    mb: 2,
                   }}
                 >
-                  <Box sx={{ position: 'relative', minHeight: 400 }}>
-                    {/* Content on the left */}
-                    <Box sx={{ pr: { md: 4 }, pb: { md: 4 } }}>
-                      <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 3 }}>
-                        <Box
-                          sx={{
-                            width: 64,
-                            height: 64,
-                            borderRadius: '50%',
-                            background: `linear-gradient(135deg, ${step.color} 0%, ${step.color}dd 100%)`,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            fontWeight: 700,
-                            fontSize: '1.5rem',
-                            mr: 3,
-                            boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-                            flexShrink: 0,
-                          }}
-                        >
-                          {step.step}
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-                          <Box sx={{ p: 1.5, bgcolor: '#F3F4F6', borderRadius: 2, mr: 2 }}>
-                            <step.icon sx={{ fontSize: 32, color: "#374151" }} />
-                          </Box>
-                          <Chip
-                            label={`Step ${step.step}`}
-                            variant="outlined"
-                            sx={{
-                              color: step.color,
-                              borderColor: step.color,
-                              fontWeight: 500,
-                            }}
-                          />
-                        </Box>
-                      </Box>
-                      <Typography 
-                        variant="h5" 
-                        sx={{ 
-                          mb: 2, 
-                          fontWeight: 600, 
-                          color: "#1F2937", 
-                          lineHeight: 1.3,
-                          hyphens: 'auto',
-                          wordBreak: 'break-word',
+                  {t("pest_detection.demo_title")}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#4B5563",
+                    maxWidth: "48rem",
+                    mx: "auto",
+                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {t("pest_detection.demo_description")}
+                </Typography>
+              </Box>
+              <Box
+                component={motion.div}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0 6px 16px rgba(0,0,0,0.15)",
+                }}
+                sx={{
+                  maxWidth: 700,
+                  mx: "auto",
+                  bgcolor: "rgba(255, 255, 255, 0.9)",
+                  borderRadius: 3,
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  overflow: "hidden",
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "relative",
+                    width: "100%",
+                    paddingTop: "56.25%", // 16:9 aspect ratio
+                    bgcolor: "#1F2A44",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* Video Placeholder */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      bgcolor: "#2F855A11",
+                      borderRadius: 3,
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        bgcolor: "rgba(212, 160, 23, 0.2)",
+                      },
+                    }}
+                  >
+                    <Box sx={{ textAlign: "center" }}>
+                      <IconButton
+                        component={motion.button}
+                        whileHover={{
+                          scale: 1.2,
+                          rotate: 10,
+                          boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+                        }}
+                        whileTap={{ scale: 0.9 }}
+                        sx={{
+                          bgcolor: "#D4A017",
+                          "&:hover": { bgcolor: "#E0B84B" },
+                          borderRadius: "50%",
+                          width: 60,
+                          height: 60,
+                          border: "2px solid rgba(255, 255, 255, 0.5)",
                         }}
                       >
-                        {step.title}
-                      </Typography>
-                      <Typography variant="body1" sx={{ color: "#6B7280", lineHeight: 1.7, fontSize: '1.125rem' }}>
-                        {step.description}
+                        <PlayArrowIcon
+                          sx={{ fontSize: 32, color: "#1F2A44" }}
+                        />
+                      </IconButton>
+                      <Typography
+                        sx={{
+                          color: "#F9FAFB",
+                          mt: 2,
+                          fontSize: "0.9rem",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {t("pest_detection.video_placeholder")}
                       </Typography>
                     </Box>
-                    
-                    {/* Image placeholder in bottom right corner */}
-                    <Box
+                  </Box>
+                </Box>
+                <Box sx={{ textAlign: "center", py: 3 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: "#1F2A44",
+                      mb: 1,
+                      fontWeight: 600,
+                      fontSize: "1.1rem",
+                    }}
+                  >
+                    {t("pest_detection.video_title")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#4B5563",
+                      fontSize: "0.9rem",
+                      maxWidth: "90%",
+                      mx: "auto",
+                    }}
+                  >
+                    {t("pest_detection.video_description")}
+                  </Typography>
+                </Box>
+              </Box>
+            </motion.div>
+          </Container>
+        </Box>
+
+        {/* Steps Section (Carousel) */}
+        <Box
+          id="steps"
+          component="section"
+          sx={{
+            py: 12,
+            bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <Container maxWidth="xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={visibleSections.steps ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              <Box sx={{ textAlign: "center", mb: 6 }}>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontWeight: 700,
+                    color: "#1F2A44",
+                    fontSize: {
+                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      lg: "clamp(2.5rem, 5vw, 3rem)",
+                    },
+                    mb: 2,
+                  }}
+                >
+                  {t("pest_detection.steps_title")}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#4B5563",
+                    maxWidth: "48rem",
+                    mx: "auto",
+                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {t("pest_detection.steps_description")}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  overflowX: "auto",
+                  gap: 3,
+                  pb: 2,
+                  scrollSnapType: "x mandatory",
+                  scrollbarWidth: "none",
+                  "&::-webkit-scrollbar": { display: "none" },
+                }}
+              >
+                {steps.map((step, index) => (
+                  <Box
+                    key={index}
+                    component={motion.div}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={visibleSections.steps ? { opacity: 1, x: 0 } : {}}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.5 + index * 0.2,
+                      type: "spring",
+                    }}
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 6px 16px rgba(0,0,0,0.15)",
+                    }}
+                    sx={{
+                      minWidth: { xs: 280, sm: 320 },
+                      scrollSnapAlign: "center",
+                      bgcolor: "rgba(255, 255, 255, 0.9)",
+                      borderRadius: 3,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(10px)",
+                      p: 3,
+                      mx: { xs: 1, sm: 0 },
+                    }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                      <Box
+                        sx={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: "50%",
+                          bgcolor: "#2F855A",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          fontWeight: 600,
+                          fontSize: "1.1rem",
+                          mr: 2,
+                        }}
+                      >
+                        {step.step}
+                      </Box>
+                      <step.icon sx={{ fontSize: 40, color: "#2F855A" }} />
+                    </Box>
+                    <Typography
+                      variant="h6"
                       sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        right: 0,
-                        width: { xs: '100%', md: 400 },
-                        height: { xs: 280, md: 320 },
-                        bgcolor: '#F8FAFC',
-                        borderRadius: 3,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: '2px dashed #D1D5DB',
-                        overflow: 'hidden',
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
-                        '&:hover': {
-                          boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
-                          transform: 'translateY(-2px)',
-                        },
-                        transition: 'all 0.3s ease',
+                        mb: 1,
+                        fontWeight: 600,
+                        color: "#1F2A44",
+                        fontSize: "1.1rem",
                       }}
                     >
-                      <Box sx={{ textAlign: 'center', p: 3 }}>
-                        <step.icon sx={{ fontSize: { xs: 64, md: 80 }, color: '#9CA3AF', mb: 2 }} />
-                        <Typography variant="h6" sx={{ color: '#6B7280', fontWeight: 600, mb: 1 }}>
-                          {step.step === "1" && "Plant Photo"}
-                          {step.step === "2" && "AI Analysis"}
-                          {step.step === "3" && "Treatment Plan"}
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#9CA3AF' }}>
-                          {step.step === "1" && "Upload clear photos of affected plants"}
-                          {step.step === "2" && "AI processes and analyzes the image"}
-                          {step.step === "3" && "Get detailed treatment recommendations"}
+                      {step.title}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#4B5563",
+                        mb: 3,
+                        fontSize: "0.9rem",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {step.description}
+                    </Typography>
+                    {/* Image placeholder */}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: 180,
+                        bgcolor: "#F3F4F6",
+                        borderRadius: 3,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: "2px dashed #D1D5DB",
+                      }}
+                    >
+                      <Box sx={{ textAlign: "center" }}>
+                        <step.icon
+                          sx={{ fontSize: 40, color: "#9CA3AF", mb: 1 }}
+                        />
+                        <Typography
+                          sx={{ color: "#9CA3AF", fontSize: "0.85rem" }}
+                        >
+                          {step.placeholder}
                         </Typography>
                       </Box>
                     </Box>
                   </Box>
-                </Paper>
-              </motion.div>
-            ))}
-          </Stack>
-        </motion.div>
+                ))}
+              </Box>
+            </motion.div>
+          </Container>
+        </Box>
 
         {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-          style={{ marginTop: '4rem' }}
+        <Box
+          id="cta"
+          component="section"
+          sx={{
+            py: 12,
+            bgcolor: "#2F855A",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+            zIndex: 1,
+          }}
         >
-          <Paper
-            elevation={0}
-            sx={{
-              p: 6,
-              border: 'none',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-              background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-              color: 'white',
-              borderRadius: 3,
-              textAlign: 'center',
+          <Box
+            component={motion.div}
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.3 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
             }}
-          >
-            <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-                <Box sx={{ p: 2, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>
-                  <CheckCircle sx={{ fontSize: 48 }} />
-                </Box>
-              </Box>
-              <Typography variant="h3" sx={{ fontWeight: 700, mb: 2 }}>
-                Ready to Detect Pests?
+            sx={{
+              position: "absolute",
+              inset: 0,
+              bgcolor:
+                "radial-gradient(circle at center, #F7E7CE33 0%, transparent 70%)",
+            }}
+          />
+          <Container maxWidth="xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={visibleSections.cta ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 700,
+                  color: "white",
+                  fontSize: {
+                    xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                    lg: "clamp(2.5rem, 5vw, 3rem)",
+                  },
+                  mb: 2,
+                }}
+              >
+                {t("pest_detection.cta_title")}
               </Typography>
-              <Typography variant="h6" sx={{ color: '#D1FAE5', mb: 4 }}>
-                Start using AI-powered pest detection today and protect your crops
+              <Typography
+                sx={{
+                  color: "#F9FAFB",
+                  mb: 4,
+                  maxWidth: "48rem",
+                  mx: "auto",
+                  fontSize: { xs: "0.9rem", lg: "1rem" },
+                  lineHeight: 1.6,
+                }}
+              >
+                {t("pest_detection.cta_description")}
               </Typography>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={2}
+                sx={{ justifyContent: "center" }}
+              >
                 <Button
+                  component={motion.button}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   variant="contained"
                   size="large"
                   sx={{
-                    bgcolor: '#D4A017',
-                    color: '#1F2937',
-                    '&:hover': {
-                      bgcolor: '#E0B84B',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+                    bgcolor: "#D4A017",
+                    color: "#1F2A44",
+                    "&:hover": {
+                      bgcolor: "#E0B84B",
+                      boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                     },
-                    px: 4,
+                    px: 5,
                     py: 1.5,
-                    borderRadius: 3,
+                    borderRadius: 6,
                     fontWeight: 600,
-                    fontSize: '1.125rem',
-                    textTransform: 'none',
+                    fontSize: "1rem",
                   }}
                 >
-                  Get Started Now
+                  {t("pest_detection.start_free_trial")}
                 </Button>
-              </motion.div>
-            </Box>
-          </Paper>
-        </motion.div>
-      </Container>
-    </Box>
-  )
-}
+                <Button
+                  component={motion.button}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  variant="outlined"
+                  size="large"
+                  sx={{
+                    borderColor: "white",
+                    color: "white",
+                    "&:hover": {
+                      bgcolor: "white",
+                      color: "#2F855A",
+                      boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+                    },
+                    px: 5,
+                    py: 1.5,
+                    borderRadius: 6,
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                  }}
+                >
+                  {t("pest_detection.schedule_demo")}
+                </Button>
+              </Stack>
+            </motion.div>
+          </Container>
+        </Box>
 
-export default PestDetectionPage
+      <Footer />
+      <ScrollToTopButton />
+    </Box>
+    </>
+  );
+};
+
+export default PestDetectionPage;

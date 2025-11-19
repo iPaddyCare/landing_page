@@ -2,25 +2,17 @@
 
 import { useState, useEffect } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
   Container,
   Grid,
   Card,
   CardContent,
   Box,
   Stack,
-  IconButton,
   Badge,
   Divider,
   LinearProgress,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
+  Typography,
+  Button,
 } from "@mui/material";
 import {
   Agriculture as LeafIcon,
@@ -40,18 +32,23 @@ import {
   Language as GlobeIcon,
   PlayCircleOutline as PlayCircleIcon,
   Star as StarIcon,
-  Menu as MenuIcon,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 
+// Import your custom language hook
+import { useLanguage } from '../hooks/useLanguage';
+
 export default function Home() {
+  const { t } = useLanguage(); // Use your custom hook instead of next-i18next
+  
   const [activeFeature, setActiveFeature] = useState(0);
   const [visibleSections, setVisibleSections] = useState({
     hero: false,
@@ -61,7 +58,6 @@ export default function Home() {
     marketplace: false,
     contact: false,
   });
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -75,7 +71,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 } // Lowered threshold for better mobile performance
     );
 
     ["hero", "benefits", "features", "app", "marketplace", "contact"].forEach(
@@ -88,135 +84,39 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const navItems = ["Features", "Benefits", "Mobile App", "Contact"];
-
-  const drawer = (
-    <Box
-      sx={{
-        bgcolor: "rgba(255, 255, 255, 0.9)",
-        backdropFilter: "blur(10px)",
-        height: "100%",
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-      onClick={handleDrawerToggle}
-    >
-      <Box>
-        <Box
-          sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2, pl: 1 }}
-        >
-          <Image
-            src="/images/logo.png"
-            alt="iPaddyCare Logo"
-            width={24}
-            height={24}
-            style={{ height: "auto", maxWidth: "100%" }}
-          />
-          <Typography variant="h6" sx={{ fontWeight: 700, color: "#1F2A44" }}>
-            iPaddyCare
-          </Typography>
-        </Box>
-        <List>
-          {navItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                component={Link}
-                href={`#${
-                  item === "Mobile App"
-                    ? "app"
-                    : item.toLowerCase().replace(" ", "")
-                }`}
-                scroll={true}
-                sx={{
-                  py: 1.5,
-                  "&:hover": { bgcolor: "rgba(212, 160, 23, 0.1)" },
-                }}
-              >
-                <ListItemText
-                  primary={item}
-                  primaryTypographyProps={{
-                    sx: {
-                      color: "#1F2A44",
-                      fontWeight: 500,
-                      fontSize: "1rem",
-                    },
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-      <Button
-        component={motion.button}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        variant="contained"
-        sx={{
-          bgcolor: "#D4A017",
-          color: "#1F2A44",
-          "&:hover": {
-            bgcolor: "#E0B84B",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-          },
-          px: 4,
-          py: 1.5,
-          borderRadius: 6,
-          fontWeight: 600,
-          fontSize: "1rem",
-          mx: 2,
-          mb: 2,
-        }}
-      >
-        Get Started
-      </Button>
-    </Box>
-  );
-
   const features = [
     {
       icon: (
-        <CameraIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <CameraIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "AI Seed Quality Detection",
-      description:
-        "Automated seed sorting with AI imaging for unmatched purity",
-      details:
-        "Our advanced AI analyzes seed images to identify and sort varieties, delivering detailed purity reports to ensure top-quality seeds for your fields.",
+      title: t('features.ai_seed_quality'),
+      description: t('features.ai_seed_quality_desc'),
+      details: t('features.ai_seed_quality_details'),
       path: "/seed_detection",
     },
     {
       icon: (
-        <DropletsIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <DropletsIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "Portable Moisture Detection",
-      description: "Instant moisture monitoring via your mobile device",
-      details:
-        "Get real-time, accurate moisture readings in the field with automated logging and expert recommendations for optimal levels.",
+      title: t('features.moisture_detection'),
+      description: t('features.moisture_detection_desc'),
+      details: t('features.moisture_detection_details'),
       path: "/moisture_detection",
     },
     {
       icon: (
-        <TestTubeIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />
+        <TestTubeIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />
       ),
-      title: "Smart Soil pH Monitoring",
-      description: "Real-time soil pH analysis with AI-driven insights",
-      details:
-        "Measure soil pH instantly and receive tailored fertilizer and treatment recommendations, accessible to agricultural officers.",
+      title: t('features.soil_ph'),
+      description: t('features.soil_ph_desc'),
+      details: t('features.soil_ph_details'),
       path: "/ph_detection",
     },
     {
-      icon: <BugIcon sx={{ fontSize: { xs: 32, lg: 40 }, color: "#2F855A" }} />,
-      title: "Pest & Disease Detection",
-      description: "Early pest and disease detection with mobile imaging",
-      details:
-        "Capture plant photos for instant AI identification of pests or diseases, with treatment suggestions and supplier locations.",
+      icon: <BugIcon sx={{ fontSize: { xs: 28, lg: 40 }, color: "#2F855A" }} />,
+      title: t('features.pest_disease'),
+      description: t('features.pest_disease_desc'),
+      details: t('features.pest_disease_details'),
       path: "/pest_detection",
     },
   ];
@@ -225,40 +125,58 @@ export default function Home() {
     {
       icon: (
         <TrendingUpIcon
-          sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }}
+          sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }}
         />
       ),
-      title: "Boost Yields",
-      description: "Increase crop yields by up to 30% with proactive solutions",
+      title: t('benefits.boost_yields'),
+      description: t('benefits.boost_yields_desc'),
     },
     {
-      icon: <ZapIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />,
-      title: "Save Time",
-      description: "Cut testing time by 80% with automated tools",
-    },
-    {
-      icon: (
-        <TargetIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
-      ),
-      title: "High Precision",
-      description: "99.5% accuracy in seed and pest analysis",
+      icon: <ZapIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />,
+      title: t('benefits.save_time'),
+      description: t('benefits.save_time_desc'),
     },
     {
       icon: (
-        <AwardIcon sx={{ fontSize: { xs: 24, lg: 28 }, color: "#2F855A" }} />
+        <TargetIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />
       ),
-      title: "Expert Backed",
-      description: "Developed with Central Province agricultural experts",
+      title: t('benefits.high_precision'),
+      description: t('benefits.high_precision_desc'),
+    },
+    {
+      icon: (
+        <AwardIcon sx={{ fontSize: { xs: 22, lg: 28 }, color: "#2F855A" }} />
+      ),
+      title: t('benefits.expert_backed'),
+      description: t('benefits.expert_backed_desc'),
     },
   ];
 
   const appFeatures = [
-    "Multilingual (Sinhala, Tamil, English)",
-    "Connect with agriculture officers",
-    "AI-driven seed recommendations",
-    "Harvest and income forecasts",
-    "Integrated marketplace",
-    "Full test history",
+    t('mobile_app.multilingual'),
+    t('mobile_app.connect_officers'),
+    t('mobile_app.ai_recommendations'),
+    t('mobile_app.harvest_forecasts'),
+    t('mobile_app.integrated_marketplace'),
+    t('mobile_app.test_history'),
+  ];
+
+  const marketplaceItems = [
+    {
+      icon: <LeafIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
+      title: t('marketplace.seeds_fertilizers'),
+      description: t('marketplace.seeds_fertilizers_desc'),
+    },
+    {
+      icon: <ZapIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
+      title: t('marketplace.tools_equipment'),
+      description: t('marketplace.tools_equipment_desc'),
+    },
+    {
+      icon: <UsersIcon sx={{ color: "#2F855A", fontSize: { xs: 24, lg: 28 } }} />,
+      title: t('marketplace.expert_services'),
+      description: t('marketplace.expert_services_desc'),
+    },
   ];
 
   return (
@@ -273,137 +191,14 @@ export default function Home() {
         }}
       >
         {/* Navigation */}
-        <AppBar
-          position="sticky"
-          sx={{
-            bgcolor: "rgba(255, 255, 255, 0.85)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-            py: 1,
-          }}
-        >
-          <Toolbar
-            sx={{
-              maxWidth: "xl",
-              width: "100%",
-              mx: "auto",
-              px: { xs: 1, md: 2 },
-              overflowX: "hidden",
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Image
-                src="/images/logo.png"
-                alt="iPaddyCare Logo"
-                width={24}
-                height={24}
-                style={{ height: "auto" }}
-              />
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 700, color: "#1F2A44" }}
-              >
-                iPaddyCare
-              </Typography>
-            </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-                {navItems.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={`#${
-                      item === "Mobile App"
-                        ? "app"
-                        : item.toLowerCase().replace(" ", "")
-                    }`}
-                    scroll={true}
-                  >
-                    <Typography
-                      component={motion.div}
-                      whileHover={{ scale: 1.1, color: "#D4A017" }}
-                      sx={{
-                        color: "#1F2A44",
-                        fontWeight: 500,
-                        fontSize: "1rem",
-                        transition: "color 0.3s ease",
-                      }}
-                    >
-                      {item}
-                    </Typography>
-                  </Link>
-                ))}
-              </Box>
-              <Button
-                component={motion.button}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                variant="contained"
-                sx={{
-                  bgcolor: "#D4A017",
-                  color: "#1F2A44",
-                  "&:hover": {
-                    bgcolor: "#E0B84B",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                  },
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 6,
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                }}
-                onClick={() => {
-                  /* Add navigation logic for Get Started */
-                }}
-              >
-                Get Started
-              </Button>
-            </Box>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={handleDrawerToggle}
-              sx={{ display: { xs: "flex", md: "none" }, color: "#1F2A44" }}
-            >
-              <MenuIcon sx={{ fontSize: 32 }} />
-            </IconButton>
-          </Toolbar>
-          <Drawer
-            anchor="right"
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                width: 250,
-                boxSizing: "border-box",
-                bgcolor: "transparent",
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </AppBar>
+        <Navbar />
 
         {/* Hero Section */}
         <Box
           id="hero"
           component="section"
           sx={{
-            py: { xs: 8, lg: 12 },
+            py: { xs: 6, lg: 12 },
             px: { xs: 2, lg: 12 },
             position: "relative",
             bgcolor: "transparent",
@@ -434,30 +229,30 @@ export default function Home() {
                 alignItems="center"
                 justifyContent="space-between"
                 sx={{
-                  display: "flex",
-                  flexWrap: "nowrap",
+                  flexDirection: { xs: "column", lg: "row" },
+                  flexWrap: { xs: "wrap", lg: "nowrap" },
                   boxSizing: "border-box",
                 }}
               >
                 {/* Left: Text, Badges, Buttons, Stats */}
-                <Grid item xs={6} sx={{ minWidth: 0, pr: { xs: 1, lg: 2 } }}>
-                  <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} lg={6} sx={{ minWidth: 0, pr: { xs: 0, lg: 2 }, mb: { xs: 3, lg: 0 } }}>
+                  <Stack direction="row" spacing={2} sx={{ mb: 3, flexWrap: "wrap", gap: 1.5 }}>
                     <Badge
                       component={motion.div}
                       whileHover={{ scale: 1.05 }}
                       sx={{
                         bgcolor: "rgba(247, 231, 206, 0.9)",
                         color: "#2F855A",
-                        px: 2,
+                        px: { xs: 1.5, lg: 2 },
                         py: 1,
                         borderRadius: 2,
                         fontWeight: 500,
-                        fontSize: "0.85rem",
+                        fontSize: { xs: "0.75rem", lg: "0.85rem" },
                         backdropFilter: "blur(5px)",
                       }}
                     >
-                      <AwardIcon sx={{ fontSize: 16, mr: 1 }} />
-                      Expert Approved
+                      <AwardIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
+                      {t('hero.badge_expert_approved')}
                     </Badge>
                     <Badge
                       component={motion.div}
@@ -465,23 +260,23 @@ export default function Home() {
                       sx={{
                         bgcolor: "rgba(247, 231, 206, 0.9)",
                         color: "#2F855A",
-                        px: 2,
+                        px: { xs: 1.5, lg: 2 },
                         py: 1,
                         borderRadius: 2,
                         fontWeight: 500,
-                        fontSize: "0.85rem",
+                        fontSize: { xs: "0.75rem", lg: "0.85rem" },
                         backdropFilter: "blur(5px)",
                       }}
                     >
-                      <GlobeIcon sx={{ fontSize: 16, mr: 1 }} />
-                      Multilingual
+                      <GlobeIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
+                      {t('hero.badge_multilingual')}
                     </Badge>
                   </Stack>
                   <Typography
                     variant="h1"
                     sx={{
                       fontSize: {
-                        xs: "clamp(1.5rem, 5vw, 2.5rem)",
+                        xs: "clamp(1.5rem, 6vw, 2rem)",
                         lg: "clamp(3rem, 5vw, 4rem)",
                       },
                       fontWeight: 700,
@@ -490,12 +285,12 @@ export default function Home() {
                       mb: 2,
                     }}
                   >
-                    Transform Your
+                    {t('hero.title_transform')}
                     <Box
                       component="span"
                       sx={{ color: "#2F855A", display: "block" }}
                     >
-                      Paddy Farming
+                      {t('hero.title_paddy_farming')}
                     </Box>
                   </Typography>
                   <Typography
@@ -505,13 +300,11 @@ export default function Home() {
                       mb: 4,
                       maxWidth: "90%",
                       fontWeight: 400,
-                      fontSize: { xs: "0.9rem", lg: "1.1rem" },
+                      fontSize: { xs: "0.85rem", lg: "1.1rem" },
                       lineHeight: 1.6,
                     }}
                   >
-                    AI-powered tools for seed sorting, moisture detection, soil
-                    analysis, and pest management, tailored for Sri Lankan
-                    farmers.
+                    {t('hero.description')}
                   </Typography>
                   <Stack
                     direction={{ xs: "column", sm: "row" }}
@@ -532,14 +325,14 @@ export default function Home() {
                           bgcolor: "#E0B84B",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
                         },
-                        px: 3,
+                        px: { xs: 2, lg: 3 },
                         py: 1,
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: { xs: "0.85rem", lg: "1rem" },
+                        fontSize: { xs: "0.8rem", lg: "1rem" },
                       }}
                     >
-                      Watch Demo
+                      {t('hero.watch_demo')}
                     </Button>
                     <Button
                       component={motion.button}
@@ -556,53 +349,54 @@ export default function Home() {
                           borderColor: "#2F855A",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                         },
-                        px: 3,
+                        px: { xs: 2, lg: 3 },
                         py: 1,
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: { xs: "0.85rem", lg: "1rem" },
+                        fontSize: { xs: "0.8rem", lg: "1rem" },
                       }}
                     >
-                      Download App
+                      {t('hero.download_app')}
                     </Button>
                   </Stack>
                   <Stack
-                    direction="row"
+                    direction={{ xs: "column", sm: "row" }}
                     spacing={2}
                     sx={{
                       color: "#4B5563",
-                      fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                      fontSize: { xs: "0.75rem", lg: "0.9rem" },
+                      gap: { xs: 1.5, lg: 2 },
                     }}
                   >
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <StarIcon
-                        sx={{ color: "#D4A017", fontSize: { xs: 16, lg: 20 } }}
+                        sx={{ color: "#D4A017", fontSize: { xs: 14, lg: 20 } }}
                       />
-                      <Typography sx={{ fontWeight: 600 }}>4.9/5</Typography>
-                      <Typography>User Rating</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>4.9</Typography>
+                      <Typography>{t('hero.user_rating')}</Typography>
                     </Stack>
                     <Divider
                       orientation="vertical"
-                      sx={{ height: 20, bgcolor: "#D1D5DB" }}
+                      sx={{ height: 20, bgcolor: "#D1D5DB", display: { xs: "none", sm: "block" } }}
                     />
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <UsersIcon
-                        sx={{ color: "#2F855A", fontSize: { xs: 16, lg: 20 } }}
+                        sx={{ color: "#2F855A", fontSize: { xs: 14, lg: 20 } }}
                       />
-                      <Typography sx={{ fontWeight: 600 }}>10,000+</Typography>
-                      <Typography>Active Users</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>10K+</Typography>
+                      <Typography>{t('hero.active_users')}</Typography>
                     </Stack>
                   </Stack>
                 </Grid>
                 {/* Right: Image and Card Content */}
-                <Grid item xs={6} sx={{ minWidth: 0, pl: { xs: 1, lg: 2 } }}>
+                <Grid item xs={12} lg={6} sx={{ minWidth: 0, pl: { xs: 0, lg: 2 } }}>
                   <Card
                     component={motion.div}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                     sx={{
-                      p: 2,
+                      p: { xs: 1.5, lg: 2 },
                       bgcolor: "rgba(255, 255, 255, 0.9)",
                       borderRadius: 3,
                       boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
@@ -623,7 +417,7 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                       style={{
                         width: "100%",
-                        maxWidth: "400px",
+                        maxWidth: { xs: "100%", lg: "400px" },
                         height: "auto",
                         borderRadius: 12,
                         marginBottom: 16,
@@ -638,59 +432,59 @@ export default function Home() {
                           sx={{
                             color: "#1F2A44",
                             fontWeight: 600,
-                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                            fontSize: { xs: "0.75rem", lg: "0.9rem" },
                           }}
                         >
-                          AI Analysis Accuracy
+                          {t('hero.ai_analysis_accuracy')}
                         </Typography>
                         <Typography
                           sx={{
                             color: "#2F855A",
                             fontWeight: 600,
-                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
+                            fontSize: { xs: "0.75rem", lg: "0.9rem" },
                           }}
                         >
-                          99.5% Accurate
+                          99.5% {t('hero.accurate')}
                         </Typography>
                       </Stack>
                       <LinearProgress
                         variant="determinate"
                         value={99.5}
                         sx={{
-                          height: 8,
+                          height: { xs: 6, lg: 8 },
                           borderRadius: 4,
                           bgcolor: "#E5E7EB",
                           "& .MuiLinearProgress-bar": {
                             bgcolor: "#2F855A",
                             transition: "width 0.5s ease-in-out",
-                          }}
-                        }
+                          },
+                        }}
                       />
                       <Stack
                         direction="row"
                         spacing={2}
                         sx={{
                           color: "#4B5563",
-                          fontSize: { xs: "0.75rem", lg: "0.85rem" },
+                          fontSize: { xs: "0.7rem", lg: "0.85rem" },
                         }}
                       >
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <BugIcon
                             sx={{
-                              fontSize: { xs: 14, lg: 16 },
+                              fontSize: { xs: 12, lg: 16 },
                               color: "#3B82F6",
                             }}
                           />
-                          <Typography>Pest Detection: &lt; 2 min</Typography>
+                          <Typography>{t('hero.pest_detection_time')}</Typography>
                         </Stack>
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <TrendingUpIcon
                             sx={{
-                              fontSize: { xs: 14, lg: 16 },
+                              fontSize: { xs: 12, lg: 16 },
                               color: "#8B5CF6",
                             }}
                           />
-                          <Typography>Yield Boost: Up to 30%</Typography>
+                          <Typography>{t('hero.yield_boost')}</Typography>
                         </Stack>
                       </Stack>
                     </Stack>
@@ -718,7 +512,7 @@ export default function Home() {
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.5rem, 4vw, 2rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.25rem, 4vw, 2.75rem)",
                     },
                     fontWeight: 700,
@@ -726,19 +520,18 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Why iPaddyCare?
+                  {t('benefits.title')}
                 </Typography>
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.85rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
-                  Built with expertise from Central Province agricultural
-                  officers and the Department of Agriculture, Gannoruwa.
+                  {t('benefits.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -746,27 +539,25 @@ export default function Home() {
                 spacing={2}
                 sx={{
                   display: "flex",
-                  flexWrap: "nowrap",
+                  flexWrap: { xs: "wrap", lg: "nowrap" },
                   justifyContent: "center",
-                  overflowX: "auto",
-                  overflowY: "visible",
-                  boxSizing: "border-box",
+                  overflowX: { xs: "auto", lg: "visible" },
                   scrollbarWidth: "none",
                   "&::-webkit-scrollbar": { display: "none" },
-                  pb: 2,
+                  pb: { xs: 1, lg: 2 },
                 }}
               >
                 {benefits.map((benefit, index) => (
                   <Grid
                     key={index}
                     item
-                    xs={3}
+                    xs={6}
+                    lg={3}
                     sx={{
-                      minWidth: 0,
-                      flexShrink: 1,
-                      width: { xs: "22vw", lg: "23vw" },
-                      maxWidth: { xs: "90px", lg: "280px" },
-                      overflow: "visible",
+                      minWidth: { xs: 140, lg: 0 },
+                      maxWidth: { xs: 160, lg: "280px" },
+                      flexShrink: { xs: 0, lg: 1 },
+                      width: { xs: "auto", lg: "23vw" },
                     }}
                   >
                     <Box sx={{ overflow: "visible" }}>
@@ -782,9 +573,9 @@ export default function Home() {
                           boxShadow: "0 12px 24px rgba(0,0,0,0.15)",
                         }}
                         sx={{
-                          p: { xs: 1.5, lg: 2 },
+                          p: { xs: 1, lg: 2 },
                           height: "100%",
-                          maxHeight: { xs: "160px", lg: "200px" },
+                          maxHeight: { xs: "140px", lg: "200px" },
                           borderRadius: 3,
                           bgcolor: "rgba(255, 255, 255, 0.9)",
                           boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
@@ -800,14 +591,14 @@ export default function Home() {
                           <Box
                             sx={{
                               bgcolor: "rgba(247, 231, 206, 0.5)",
-                              width: { xs: 40, lg: 48 },
-                              height: { xs: 40, lg: 48 },
+                              width: { xs: 36, lg: 48 },
+                              height: { xs: 36, lg: 48 },
                               borderRadius: "50%",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
                               mx: "auto",
-                              mb: { xs: 1, lg: 1.5 },
+                              mb: { xs: 0.5, lg: 1.5 },
                             }}
                           >
                             {benefit.icon}
@@ -817,7 +608,7 @@ export default function Home() {
                             sx={{
                               fontWeight: 600,
                               color: "#1F2A44",
-                              fontSize: { xs: "0.8rem", lg: "1rem" },
+                              fontSize: { xs: "0.75rem", lg: "1rem" },
                               lineHeight: 1.2,
                               mb: { xs: 0.5, lg: 1 },
                             }}
@@ -827,10 +618,10 @@ export default function Home() {
                           <Typography
                             sx={{
                               color: "#4B5563",
-                              fontSize: { xs: "0.65rem", lg: "0.85rem" },
+                              fontSize: { xs: "0.6rem", lg: "0.85rem" },
                               lineHeight: 1.3,
                               display: "-webkit-box",
-                              WebkitLineClamp: 2,
+                              WebkitLineClamp: 3,
                               WebkitBoxOrient: "vertical",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
@@ -853,7 +644,7 @@ export default function Home() {
           id="features"
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
           }}
         >
@@ -863,12 +654,12 @@ export default function Home() {
               animate={visibleSections.features ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Box sx={{ textAlign: "center", mb: 6 }}>
+              <Box sx={{ textAlign: "center", mb: { xs: 4, lg: 6 } }}>
                 <Typography
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.5rem, 5vw, 3rem)",
                     },
                     fontWeight: 700,
@@ -876,19 +667,18 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Your All-in-One Farming Toolkit
+                  {t('features.title')}
                 </Typography>
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
-                  Comprehensive solutions to tackle every aspect of modern paddy
-                  cultivation.
+                  {t('features.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -925,7 +715,7 @@ export default function Home() {
                             sx={{
                               width: "100%",
                               maxWidth: 400,
-                              p: { xs: 1.5, lg: 2 },
+                              p: { xs: 1, lg: 2 },
                               cursor: "pointer",
                               border: "1px solid #E5E7EB",
                               bgcolor: "rgba(255, 255, 255, 0.95)",
@@ -941,13 +731,13 @@ export default function Home() {
                               sx={{
                                 display: "flex",
                                 alignItems: "flex-start",
-                                gap: { xs: 1.5, lg: 2 },
-                                p: { xs: 1.5, lg: 2 },
+                                gap: { xs: 1, lg: 2 },
+                                p: { xs: 1, lg: 2 },
                               }}
                             >
                               <Box
                                 sx={{
-                                  p: 1,
+                                  p: { xs: 0.75, lg: 1 },
                                   borderRadius: 2,
                                   bgcolor: "#F7E7CE",
                                   color: "#2F855A",
@@ -961,7 +751,7 @@ export default function Home() {
                                   sx={{
                                     fontWeight: 600,
                                     color: "#1F2A44",
-                                    fontSize: { xs: "1rem", lg: "1.15rem" },
+                                    fontSize: { xs: "0.9rem", lg: "1.15rem" },
                                     lineHeight: 1.2,
                                   }}
                                 >
@@ -970,7 +760,7 @@ export default function Home() {
                                 <Typography
                                   sx={{
                                     color: "#4B5563",
-                                    fontSize: { xs: "0.9rem", lg: "0.95rem" },
+                                    fontSize: { xs: "0.8rem", lg: "0.95rem" },
                                     display: "-webkit-box",
                                     WebkitLineClamp: 2,
                                     WebkitBoxOrient: "vertical",
@@ -994,7 +784,7 @@ export default function Home() {
         </Box>
 
         {/* Mobile App Section */}
-        <Box id="app" component="section" sx={{ py: 12, bgcolor: "#F9FAFB" }}>
+        <Box id="app" component="section" sx={{ py: { xs: 8, lg: 12 }, bgcolor: "#F9FAFB" }}>
           <Container maxWidth="xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1007,6 +797,7 @@ export default function Home() {
                 alignItems="center"
                 justifyContent="center"
                 sx={{
+                  flexDirection: { xs: "column", lg: "row" },
                   flexWrap: { xs: "wrap", lg: "nowrap" },
                   overflow: "hidden",
                   scrollbarWidth: "none",
@@ -1021,6 +812,7 @@ export default function Home() {
                     minWidth: 0,
                     flexShrink: 1,
                     order: { xs: 1, lg: 1 },
+                    mb: { xs: 3, lg: 0 },
                   }}
                 >
                   <Card
@@ -1029,7 +821,7 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6 }}
                     sx={{
-                      p: 3,
+                      p: { xs: 2, lg: 3 },
                       bgcolor: "rgba(31, 42, 68, 0.95)",
                       borderRadius: 3,
                       boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
@@ -1041,7 +833,7 @@ export default function Home() {
                       sx={{
                         bgcolor: "white",
                         borderRadius: 2,
-                        p: 3,
+                        p: { xs: 2, lg: 3 },
                       }}
                     >
                       <Stack
@@ -1055,33 +847,33 @@ export default function Home() {
                             sx={{
                               fontWeight: 700,
                               color: "#1F2A44",
-                              fontSize: "1.1rem",
+                              fontSize: { xs: "0.95rem", lg: "1.1rem" },
                             }}
                           >
-                            iPaddyCare
+                            {t('common.company_name')}
                           </Typography>
                         </Stack>
                         <Stack direction="row" spacing={1}>
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#EF4444",
                               borderRadius: "50%",
                             }}
                           />
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#F59E0B",
                               borderRadius: "50%",
                             }}
                           />
                           <Box
                             sx={{
-                              width: 10,
-                              height: 10,
+                              width: { xs: 8, lg: 10 },
+                              height: { xs: 8, lg: 10 },
                               bgcolor: "#2F855A",
                               borderRadius: "50%",
                             }}
@@ -1109,17 +901,17 @@ export default function Home() {
                           boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)",
                         }}
                       />
-                      <Stack spacing={1.5} sx={{ fontSize: "0.9rem" }}>
+                      <Stack spacing={1.5} sx={{ fontSize: { xs: "0.8rem", lg: "0.9rem" } }}>
                         <Stack
                           direction="row"
                           justifyContent="space-between"
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            Seed Analysis
+                            {t('mobile_app.seed_analysis')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                         <Stack
@@ -1128,10 +920,10 @@ export default function Home() {
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            Moisture Test
+                            {t('mobile_app.moisture_test')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                         <Stack
@@ -1140,10 +932,10 @@ export default function Home() {
                           alignItems="center"
                         >
                           <Typography sx={{ color: "#4B5563" }}>
-                            pH Analysis
+                            {t('mobile_app.ph_analysis')}
                           </Typography>
                           <CheckCircleIcon
-                            sx={{ color: "#3B82F6", fontSize: 16 }}
+                            sx={{ color: "#3B82F6", fontSize: { xs: 14, lg: 16 } }}
                           />
                         </Stack>
                       </Stack>
@@ -1164,23 +956,23 @@ export default function Home() {
                     sx={{
                       bgcolor: "rgba(247, 231, 206, 0.9)",
                       color: "#2F855A",
-                      px: 2,
+                      px: { xs: 1.5, lg: 2 },
                       py: 1,
                       borderRadius: 2,
                       mb: 2,
                       fontWeight: 500,
-                      fontSize: "0.85rem",
+                      fontSize: { xs: "0.75rem", lg: "0.85rem" },
                       backdropFilter: "blur(5px)",
                     }}
                   >
-                    <SmartphoneIcon sx={{ fontSize: 16, mr: 1 }} />
-                    Mobile App
+                    <SmartphoneIcon sx={{ fontSize: { xs: 14, lg: 16 }, mr: 1 }} />
+                    {t('mobile_app.badge')}
                   </Badge>
                   <Typography
                     variant="h2"
                     sx={{
                       fontSize: {
-                        xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                        xs: "clamp(1.5rem, 5vw, 1.75rem)",
                         lg: "clamp(2.5rem, 5vw, 3rem)",
                       },
                       fontWeight: 700,
@@ -1188,18 +980,17 @@ export default function Home() {
                       mb: 2,
                     }}
                   >
-                    Farming at Your Fingertips
+                    {t('mobile_app.title')}
                   </Typography>
                   <Typography
                     sx={{
                       color: "#4B5563",
                       mb: 3,
-                      fontSize: { xs: "0.9rem", lg: "1rem" },
+                      fontSize: { xs: "0.8rem", lg: "1rem" },
                       lineHeight: 1.6,
                     }}
                   >
-                    Manage your farm with our intuitive mobile app, designed for
-                    farmers and agricultural professionals in Sri Lanka.
+                    {t('mobile_app.description')}
                   </Typography>
                   <Stack spacing={1.5} sx={{ mb: 3 }}>
                     {appFeatures.map((feature, index) => (
@@ -1216,10 +1007,10 @@ export default function Home() {
                         transition={{ duration: 0.5, delay: index * 0.2 }}
                       >
                         <CheckCircleIcon
-                          sx={{ color: "#2F855A", fontSize: 20 }}
+                          sx={{ color: "#2F855A", fontSize: { xs: 18, lg: 20 } }}
                         />
                         <Typography
-                          sx={{ color: "#4B5563", fontSize: "0.9rem" }}
+                          sx={{ color: "#4B5563", fontSize: { xs: "0.8rem", lg: "0.9rem" } }}
                         >
                           {feature}
                         </Typography>
@@ -1241,13 +1032,13 @@ export default function Home() {
                           bgcolor: "#374151",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
                         },
-                        px: 4,
+                        px: { xs: 3, lg: 4 },
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: { xs: "0.8rem", lg: "0.9rem" },
                       }}
                     >
-                      Download for iOS
+                      {t('mobile_app.download_ios')}
                     </Button>
                     <Button
                       component={motion.button}
@@ -1264,13 +1055,13 @@ export default function Home() {
                           borderColor: "#1F2A44",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                         },
-                        px: 4,
+                        px: { xs: 3, lg: 4 },
                         borderRadius: 6,
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: { xs: "0.8rem", lg: "0.9rem" },
                       }}
                     >
-                      Get on Android
+                      {t('mobile_app.get_android')}
                     </Button>
                   </Stack>
                 </Grid>
@@ -1284,7 +1075,7 @@ export default function Home() {
           id="marketplace"
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "linear-gradient(135deg, #F9FAFB 0%, #F7E7CE22 100%)",
           }}
         >
@@ -1294,23 +1085,23 @@ export default function Home() {
               animate={visibleSections.marketplace ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Box sx={{ textAlign: "center", mb: 6 }}>
+              <Box sx={{ textAlign: "center", mb: { xs: 4, lg: 6 } }}>
                 <Box
                   sx={{
                     bgcolor: "rgba(247, 231, 206, 0.5)",
-                    p: 2,
+                    p: { xs: 1.5, lg: 2 },
                     borderRadius: "50%",
                     display: "inline-flex",
                     mb: 2,
                   }}
                 >
-                  <ShoppingCartIcon sx={{ color: "#2F855A", fontSize: 36 }} />
+                  <ShoppingCartIcon sx={{ color: "#2F855A", fontSize: { xs: 32, lg: 36 } }} />
                 </Box>
                 <Typography
                   variant="h2"
                   sx={{
                     fontSize: {
-                      xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                      xs: "clamp(1.5rem, 5vw, 1.75rem)",
                       lg: "clamp(2.5rem, 5vw, 3rem)",
                     },
                     fontWeight: 700,
@@ -1318,19 +1109,18 @@ export default function Home() {
                     mb: 2,
                   }}
                 >
-                  Explore Our Marketplace
+                  {t('marketplace.title')}
                 </Typography>
                 <Typography
                   sx={{
                     color: "#4B5563",
-                    maxWidth: "48rem",
+                    maxWidth: { xs: "90%", lg: "48rem" },
                     mx: "auto",
                     fontWeight: 400,
-                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                    fontSize: { xs: "0.8rem", lg: "1rem" },
                   }}
                 >
-                  Find premium seeds, tools, and expert services to elevate your
-                  farming operations.
+                  {t('marketplace.subtitle')}
                 </Typography>
               </Box>
               <Grid
@@ -1344,32 +1134,16 @@ export default function Home() {
                   "&::-webkit-scrollbar": { display: "none" },
                 }}
               >
-                {[
-                  {
-                    icon: <LeafIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Seeds & Fertilizers",
-                    description:
-                      "High-quality seeds and organic fertilizers from trusted suppliers",
-                  },
-                  {
-                    icon: <ZapIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Tools & Equipment",
-                    description:
-                      "Advanced tools to enhance your farming efficiency",
-                  },
-                  {
-                    icon: <UsersIcon sx={{ color: "#2F855A", fontSize: 28 }} />,
-                    title: "Expert Services",
-                    description:
-                      "Access professional agricultural consultation and support",
-                  },
-                ].map((item, index) => (
+                {marketplaceItems.map((item, index) => (
                   <Grid
                     key={index}
+                    item
+                    xs={12}
+                    md={4}
                     sx={{
                       width: { xs: "100%", md: "30%" },
-                      maxWidth: { md: "384px" },
-                      minWidth: 0,
+                      maxWidth: { xs: "100%", md: "384px" },
+                      minWidth: { xs: 280, md: 0 },
                       flexShrink: 1,
                     }}
                   >
@@ -1385,7 +1159,7 @@ export default function Home() {
                         boxShadow: "0 12px 24px rgba(0,0,0,0.15)",
                       }}
                       sx={{
-                        p: 3,
+                        p: { xs: 2, lg: 3 },
                         height: "100%",
                         borderRadius: 3,
                         bgcolor: "rgba(255, 255, 255, 0.9)",
@@ -1399,8 +1173,8 @@ export default function Home() {
                         <Box
                           sx={{
                             bgcolor: "rgba(247, 231, 206, 0.5)",
-                            width: 50,
-                            height: 50,
+                            width: { xs: 40, lg: 50 },
+                            height: { xs: 40, lg: 50 },
                             borderRadius: 2,
                             display: "flex",
                             alignItems: "center",
@@ -1416,7 +1190,7 @@ export default function Home() {
                             fontWeight: 600,
                             color: "#1F2A44",
                             mb: 1,
-                            fontSize: "1.1rem",
+                            fontSize: { xs: "0.95rem", lg: "1.1rem" },
                           }}
                         >
                           {item.title}
@@ -1424,7 +1198,7 @@ export default function Home() {
                         <Typography
                           sx={{
                             color: "#4B5563",
-                            fontSize: "0.9rem",
+                            fontSize: { xs: "0.8rem", lg: "0.9rem" },
                             lineHeight: 1.5,
                           }}
                         >
@@ -1443,7 +1217,7 @@ export default function Home() {
         <Box
           component="section"
           sx={{
-            py: 12,
+            py: { xs: 8, lg: 12 },
             bgcolor: "#2F855A",
             textAlign: "center",
             position: "relative",
@@ -1472,7 +1246,7 @@ export default function Home() {
                 variant="h2"
                 sx={{
                   fontSize: {
-                    xs: "clamp(1.75rem, 5vw, 2.25rem)",
+                    xs: "clamp(1.5rem, 5vw, 1.75rem)",
                     lg: "clamp(2.5rem, 5vw, 3rem)",
                   },
                   fontWeight: 700,
@@ -1480,20 +1254,19 @@ export default function Home() {
                   mb: 2,
                 }}
               >
-                Transform Your Farm Today
+                {t('cta.title')}
               </Typography>
               <Typography
                 sx={{
                   color: "#F9FAFB",
                   mb: 4,
-                  maxWidth: "48rem",
+                  maxWidth: { xs: "90%", lg: "48rem" },
                   mx: "auto",
                   fontWeight: 400,
-                  fontSize: { xs: "0.9rem", lg: "1rem" },
+                  fontSize: { xs: "0.8rem", lg: "1rem" },
                 }}
               >
-                Join over 10,000 farmers using iPaddyCare to boost yields and
-                streamline operations.
+                {t('cta.subtitle')}
               </Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -1513,14 +1286,14 @@ export default function Home() {
                       bgcolor: "#E0B84B",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                     },
-                    px: 5,
+                    px: { xs: 4, lg: 5 },
                     py: 1.5,
                     borderRadius: 6,
                     fontWeight: 600,
-                    fontSize: "1rem",
+                    fontSize: { xs: "0.85rem", lg: "1rem" },
                   }}
                 >
-                  Start Free Trial
+                  {t('cta.start_free_trial')}
                 </Button>
                 <Button
                   component={motion.button}
@@ -1536,14 +1309,14 @@ export default function Home() {
                       color: "#2F855A",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                     },
-                    px: 5,
+                    px: { xs: 4, lg: 5 },
                     py: 1.5,
                     borderRadius: 6,
                     fontWeight: 600,
-                    fontSize: "1rem",
+                    fontSize: { xs: "0.85rem", lg: "1rem" },
                   }}
                 >
-                  Schedule Demo
+                  {t('cta.schedule_demo')}
                 </Button>
               </Stack>
             </motion.div>
@@ -1554,7 +1327,6 @@ export default function Home() {
         <Footer />
 
         {/* Scroll to Top Button */}
-        
         <ScrollToTopButton />
       </Box>
     </>
