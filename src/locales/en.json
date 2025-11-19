@@ -213,6 +213,38 @@
     "cta_description": "Leverage our AI-driven soil testing system with integrated advisory support to achieve unmatched crop yield and efficiency.",
     "start_free_trial": "Start Free Trial",
     "schedule_demo": "Schedule Demo"
-}
+  },
+  "seed_moisture": {
+    "iot_powered": "IoT-Powered",
+    "real_time_monitoring": "Real-Time Monitoring",
+    "title": "Portable Seed Moisture Checking",
+    "subtitle": "Accurate Moisture Levels with Smart Guidance",
+    "description": "Optimize your seed storage with our portable IoT device and mobile app, providing real-time moisture readings and lab-based instructions to achieve optimal levels.",
+    "start_checking": "Check Moisture Now",
+    "portable_device": "Portable IoT device",
+    "real_time_detection": "Real-time moisture detection",
+    "lab_guidance": "Lab-data based instructions",
+    "mobile_integration": "Mobile app integration",
+    "demo_title": "Watch Our Moisture Checker in Action",
+    "demo_description": "See how our portable IoT device measures seed moisture and the app provides instant guidance based on lab data.",
+    "video_placeholder": "Demo Video Placeholder (Add Your Video Here)",
+    "video_title": "Seed Moisture Checker Demo",
+    "video_description": "Watch our IoT device and app work together to measure moisture and provide corrective instructions.",
+    "steps_title": "How Our System Works",
+    "steps_description": "A simple process to monitor and optimize seed moisture levels on the go",
+    "step_1_title": "Connect IoT Device",
+    "step_1_description": "Pair your portable device with the mobile app via Bluetooth",
+    "step_1_placeholder": "Device Connection",
+    "step_2_title": "Measure Moisture",
+    "step_2_description": "Place seeds in the device and get instant readings",
+    "step_2_placeholder": "Moisture Measurement",
+    "step_3_title": "Get Instructions & Predictions",
+    "step_3_description": "App provides guidance based on lab data if levels are incorrect",
+    "step_3_placeholder": "Guidance Screen",
+    "cta_title": "Optimize Your Seed Moisture Today",
+    "cta_description": "Use our portable IoT device and app to ensure perfect moisture levels with expert guidance from lab data.",
+    "start_free_trial": "Start Free Trial",
+    "schedule_demo": "Schedule Demo"
+  }
 
 }
