@@ -42,6 +42,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
+import Navbar from "@/components/Navbar";
 
 const PhDetection = () => {
   const { t } = useLanguage();
@@ -227,152 +228,8 @@ const PhDetection = () => {
           }}
         />
 
-        {/* Navigation */}
-        <AppBar
-          position="sticky"
-          sx={{
-            bgcolor: "rgba(255, 255, 255, 0.85)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-            py: 1,
-          }}
-        >
-          <Toolbar
-            sx={{
-              maxWidth: "xl",
-              width: "100%",
-              mx: "auto",
-              px: { xs: 1, md: 2 },
-              overflowX: "hidden",
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Image
-                src="/images/logo.png"
-                alt="iPaddyCare Logo"
-                width={24}
-                height={24}
-                style={{ height: "auto" }}
-              />
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 700, color: "#1F2A44", fontSize: "1.5rem" }}
-              >
-                {t("common.company_name")}
-              </Typography>
-            </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-                {navItems.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={`#${
-                      item === t("navigation.mobile_app")
-                        ? "app"
-                        : item.toLowerCase().replace(" ", "")
-                    }`}
-                    scroll={true}
-                  >
-                    <Typography
-                      component={motion.div}
-                      whileHover={{ scale: 1.1, color: "#D4A017" }}
-                      sx={{
-                        color: "#1F2A44",
-                        fontWeight: 500,
-                        fontSize: "1rem",
-                        transition: "color 0.3s ease",
-                      }}
-                    >
-                      {item}
-                    </Typography>
-                  </Link>
-                ))}
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Button
-                    startIcon={<ArrowBack />}
-                    variant="outlined"
-                    sx={{
-                      borderColor: "#2F855A",
-                      color: "#2F855A",
-                      "&:hover": {
-                        bgcolor: "#2F855A11",
-                        borderColor: "#2F855A",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                      },
-                      px: 3,
-                      py: 1,
-                      borderRadius: 6,
-                      fontWeight: 600,
-                      fontSize: "1rem",
-                    }}
-                  >
-                    {t("soil_ph_testing.back_to_home")}
-                  </Button>
-                </Link>
-                <Button
-                  component={motion.button}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#D4A017",
-                    color: "#1F2A44",
-                    "&:hover": {
-                      bgcolor: "#E0B84B",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                    },
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: 6,
-                    fontWeight: 600,
-                    fontSize: "1rem",
-                  }}
-                >
-                  {t("soil_ph_testing.get_started")}
-                </Button>
-              </Box>
-            </Box>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={handleDrawerToggle}
-              sx={{ display: { xs: "flex", md: "none" }, color: "#1F2A44" }}
-            >
-              <MenuIcon sx={{ fontSize: 32 }} />
-            </IconButton>
-          </Toolbar>
-          <Drawer
-            anchor="right"
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                width: 250,
-                boxSizing: "border-box",
-                bgcolor: "transparent",
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </AppBar>
+      <Navbar showBackButton={true} />
+
 
         {/* Hero Section */}
         <Box
